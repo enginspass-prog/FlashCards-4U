@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#060d18">
+<meta name="screen-orientation" content="any">
+<title>FlashCards 4U</title>
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none}
+:root{
+--bg:#060d18;--bg2:#0b1628;--bg3:#0f1f35;--bg4:#142540;
+--t1:#f0f6ff;--t2:#a8c4e0;--t3:#4a6a8a;
+--bd:#162035;--bd2:#1e2f48;--bd3:#2a3f5a;
+--ac:#1a6cf0;--ac2:#4d9fff;
+--gr:#00d084;--or:#ff8c00;--rd:#ff3b5c;--gd:#ffd700;--pu:#b87fff;--tl:#00c9c9;
+--A1:#00d084;--A2:#00c9c9;--B1:#4d9fff;--B2:#b87fff;--C1:#ff8c00;--C2:#ff3b5c;
+--GR:#9b59b6;--PRV:#e67e22;--AWL:#27ae60;--MED:#e74c3c;--BIZ:#2980b9;--TECH:#8e44ad;--HOM:#e91e8c;--BOD:#00bcd4;--FOD:#8bc34a;--NAT:#4caf50;--TRN:#ff9800;--HLT:#f44336;--EMO:#9c27b0;--CLO:#ff5722;--EDU:#3f51b5;--VRB:#009688;--ADJ:#673ab7;--ADV:#607d8b;--SPT:#ff6b35;--SCI:#5c6bc0;--ART:#ab47bc;--ENV:#26a69a;--WRK:#42a5f5;--TRV:#26c6da;--DIG:#7e57c2;--WEA:#66bb6a;--FPR:#ef5350;--LAW:#8d6e63;--PSY:#ff7043;--COL:#00897b;--PV:#1e88e5;--IDM:#e53935;--PHR:#f06292;
+--r:18px;--rs:13px;--rx:9px;--sh:0 12px 40px rgba(0,0,0,.5);--tr:.22s ease;
+}
+.light{--bg:#f0f4f8;--bg2:#fff;--bg3:#e8eef5;--bg4:#dde5ef;--t1:#0a1628;--t2:#2a4060;--t3:#5a7a9a;--bd:#c8d8e8;--bd2:#b8cde0;--bd3:#a8bdd0}
+html,body{height:100%;background:var(--bg);color:var(--t1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden;-webkit-font-smoothing:antialiased}
+#app{display:flex;flex-direction:column;height:100%;position:relative}
+/* NAV */
+#nav{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 8px;background:rgba(6,13,24,.95);border-bottom:1px solid var(--bd);flex-shrink:0;z-index:10}
+.light #nav{background:rgba(240,244,248,.95)}
+.nav-l{display:flex;align-items:center;gap:7px}
+.nav-ttl{font-size:14px;font-weight:900;background:linear-gradient(135deg,var(--ac2),var(--pu));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-r{display:flex;align-items:center;gap:6px}
+#sp-pill{display:flex;align-items:center;gap:3px;padding:3px 9px;background:rgba(255,140,0,.1);border:1px solid rgba(255,140,0,.25);border-radius:99px;font-size:10px;font-weight:800;color:var(--or)}
+#xp-pill{display:flex;align-items:center;gap:3px;padding:3px 9px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:99px;font-size:10px;font-weight:800;color:var(--gd)}
+#lvlbtn{padding:4px 10px;border-radius:99px;font-size:9px;font-weight:800;border:1px solid var(--ac2);background:none;color:var(--ac2);cursor:pointer}
+#thmbtn{background:none;border:1px solid var(--bd2);border-radius:99px;padding:4px 9px;color:var(--t3);cursor:pointer;font-size:13px}
+/* SCREENS */
+#screens{flex:1;overflow:hidden;position:relative}
+.scr{position:absolute;top:0;left:0;right:0;bottom:60px;overflow-y:scroll;-webkit-overflow-scrolling:touch;overscroll-behavior-y:contain;padding:12px 12px 20px;display:none;flex-direction:column;gap:8px}
+.scr.on{display:flex}
+/* LOGIN */
+#login{align-items:center;justify-content:flex-start;padding-top:20px;background:radial-gradient(ellipse at 50% 20%,rgba(26,108,240,.07),transparent 60%)}
+.lbox{width:100%;max-width:340px;background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--r);padding:22px 18px;display:flex;flex-direction:column;gap:13px;position:relative;overflow:hidden}
+.lbox::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--ac),var(--pu))}
+.l-logo{font-size:40px;text-align:center}
+.l-ttl{font-size:19px;font-weight:900;text-align:center;direction:rtl}
+.l-sub{font-size:10px;color:var(--t3);text-align:center;direction:rtl}
+.inp-g{display:flex;flex-direction:column;gap:4px}
+.inp-l{font-size:10px;color:var(--t3);font-weight:700;direction:rtl}
+.inp{width:100%;padding:11px 13px;background:var(--bg3);border:1px solid var(--bd2);border-radius:var(--rs);color:var(--t1);font-size:14px;outline:none;font-family:inherit;direction:rtl;-webkit-user-select:text;user-select:text}
+.inp:focus{border-color:var(--ac)}
+.l-btn{width:100%;padding:14px;border-radius:var(--rs);border:none;background:linear-gradient(135deg,var(--ac),#0850c0);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit}
+.l-btn:active{transform:scale(.97)}
+.av-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.av-btn{width:44px;height:44px;border-radius:50%;border:2px solid var(--bd2);background:var(--bg3);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;font-family:inherit}
+.av-btn.sel{border-color:var(--ac2);background:rgba(77,159,255,.15);transform:scale(1.1)}
+.ul{display:flex;flex-direction:column;gap:6px}
+.ui{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rs);cursor:pointer}
+.uav{width:34px;height:34px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:17px;border:1px solid var(--bd2)}
+.unm{font-size:12px;font-weight:700;flex:1;direction:rtl}
+.uinf{font-size:9px;color:var(--t3);direction:rtl}
+.udel-btn{padding:3px 7px;border-radius:99px;border:1px solid rgba(255,59,92,.3);background:none;color:var(--rd);font-size:9px;cursor:pointer;font-family:inherit}
+.or-d{display:flex;align-items:center;gap:7px;color:var(--t3);font-size:10px}
+.or-l{flex:1;height:1px;background:var(--bd)}
+/* WELCOME */
+#welcome{background:transparent;padding-top:10px}
+.wh{text-align:center;padding:20px 14px 16px;background:radial-gradient(ellipse at 50% 0%,rgba(26,108,240,.12),transparent 65%);border-radius:var(--r);border:1px solid var(--bd2)}
+.wav{font-size:42px;margin-bottom:5px}
+.wnm{font-size:19px;font-weight:900;direction:rtl;margin-bottom:2px}
+.wlv{font-size:10px;color:var(--t3);margin-bottom:11px;direction:rtl}
+.wsr{display:flex;gap:7px;justify-content:center;margin-bottom:9px;flex-wrap:wrap}
+.wst{text-align:center;background:rgba(255,255,255,.04);border:1px solid var(--bd2);border-radius:var(--rx);padding:7px 13px}
+.wsn{font-size:19px;font-weight:900}
+.wsl{font-size:8px;color:var(--t3);direction:rtl}
+.wbgs{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-top:4px}
+.wbg{font-size:8px;padding:2px 9px;border-radius:99px;border:1px solid var(--gd);color:var(--gd);background:rgba(255,215,0,.06);font-weight:700}
+.wgreet{font-size:11px;color:var(--t2);line-height:2;background:rgba(26,108,240,.05);border:1px solid rgba(26,108,240,.12);border-radius:var(--rs);padding:12px;direction:rtl}
+.card2{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:13px;position:relative;overflow:visible}
+.light .card2{background:#fff}
+.card2::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--pu))}
+.c2t{font-size:11px;font-weight:800;color:var(--ac2);margin-bottom:9px;direction:rtl}
+.c2r{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px;font-size:11px;color:var(--t2);line-height:1.8;direction:rtl}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px}
+.rb{border-radius:var(--rx);padding:9px;border:1px solid;font-size:9px;line-height:1.7;direction:rtl}
+.s-btn{width:100%;padding:15px;border-radius:var(--rs);border:none;background:linear-gradient(135deg,var(--ac),#0850c0);color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 0 20px rgba(26,108,240,.3)}
+.s-btn:active{transform:scale(.97)}
+/* LEVEL PICKER */
+#lvls{background:transparent;padding-top:10px}
+.lph{text-align:center;padding:14px 0 4px;font-size:15px;font-weight:900}
+.lps{text-align:center;font-size:9px;color:var(--t3);letter-spacing:2px;margin-bottom:12px;text-transform:uppercase}
+.lsc-row{display:flex;align-items:center;gap:8px}
+.lsc{flex:1;background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:12px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.light .lsc{background:#fff}
+.lsc::before{content:'';position:absolute;inset:0;background:currentColor;opacity:.04}
+.lsg{position:absolute;right:-6px;top:-6px;width:44px;height:44px;border-radius:50%;background:currentColor;opacity:.08;filter:blur(10px)}
+.lsnm{font-size:15px;font-weight:900}
+.lsen{font-size:8px;letter-spacing:1px;opacity:.7;text-transform:uppercase}
+.lsfa{font-size:8px;opacity:.45}
+.lsct{margin-left:auto;text-align:right;font-size:9px;color:var(--t3);line-height:1.9}
+.lsc-quiz-btn{padding:8px 11px;border-radius:var(--rx);border:1px solid;background:none;cursor:pointer;font-size:9px;font-weight:800;font-family:inherit;white-space:nowrap;flex-shrink:0}
+/* Special categories */
+.special-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.scat-btn{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:11px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;position:relative;overflow:hidden}
+.light .scat-btn{background:#fff}
+.scat-btn::before{content:'';position:absolute;inset:0;background:currentColor;opacity:.04}
+.scat-ico{font-size:18px}
+.scat-nm{font-size:14px;font-weight:800}
+.scat-en{font-size:11px;opacity:.6}
+.scat-ct{margin-left:auto;font-size:12px;color:var(--t3);text-align:right;line-height:1.8}
+.scat-quiz{padding:5px 8px;border-radius:99px;border:1px solid;background:none;cursor:pointer;font-size:8px;font-weight:800;font-family:inherit;margin-top:4px}
+/* STUDY */
+#study{padding:0;overflow:hidden}
+#sw{flex:1;display:flex;flex-direction:column;height:100%}
+#ca{flex:1;display:flex;align-items:center;justify-content:center;padding:8px 10px;position:relative;overflow:hidden;min-height:0}
+#spb{position:absolute;top:0;left:0;right:0;height:3px;background:var(--bd);z-index:5}
+#spf{height:100%;background:linear-gradient(90deg,var(--ac),var(--pu));transition:width .6s;border-radius:0 3px 3px 0}
+#fc{width:100%;max-width:420px;perspective:1200px}
+#card{width:100%;min-height:50vh;position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,0,.2,1);cursor:pointer}
+#card.flipped{transform:rotateY(180deg)}
+.cs{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+#cf{background:linear-gradient(155deg,var(--bg3),var(--bg2));border:1px solid var(--bd3);box-shadow:var(--sh)}
+.light #cf{background:linear-gradient(155deg,#fff,#f0f4f8)}
+#cb{background:linear-gradient(155deg,#071528,#0a1e3a);border:1px solid rgba(77,159,255,.2);box-shadow:var(--sh);transform:rotateY(180deg)}
+.light #cb{background:linear-gradient(155deg,#e8f0f8,#f5f8fc)}
+.crib{position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r) var(--r) 0 0}
+.cin{padding:18px 18px 14px;display:flex;flex-direction:column;height:100%}
+#wlvl{font-size:8px;font-weight:800;padding:2px 9px;border-radius:99px;border:1px solid;display:inline-flex;align-items:center;gap:4px;align-self:flex-start;margin-bottom:9px;letter-spacing:1px;text-transform:uppercase}
+#wpos{font-size:9px;color:var(--t3);margin-bottom:2px;direction:ltr;font-style:italic}
+#wmain{font-size:2rem;font-weight:900;color:var(--t1);margin-bottom:7px;line-height:1.1;direction:ltr;letter-spacing:-.5px;word-break:break-word}
+.prr{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}
+#wpron{font-size:10px;color:var(--t3);font-family:monospace;direction:ltr;background:rgba(255,255,255,.04);padding:2px 7px;border-radius:5px;border:1px solid var(--bd)}
+.light #wpron{background:rgba(0,0,0,.04)}
+.abtn{background:rgba(255,255,255,.07);border:1px solid var(--bd3);border-radius:99px;padding:4px 11px;color:var(--t2);cursor:pointer;font-size:10px;font-family:inherit;display:flex;align-items:center;gap:3px}
+.abtn.playing{color:var(--ac2);border-color:var(--ac)}
+.light .abtn{background:rgba(0,0,0,.05)}
+#wtype{font-size:8px;padding:2px 6px;border-radius:99px;border:1px solid var(--bd3);color:var(--t3);display:none;letter-spacing:.5px}
+.cft{margin-top:auto;display:flex;align-items:center;gap:9px}
+.mrbg{fill:none;stroke:var(--bd);stroke-width:3}
+.mrfill{fill:none;stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .8s,stroke .3s}
+#mpct{font-size:10px;color:var(--t2);font-weight:700}
+.htw{margin-left:auto;text-align:center}
+.hta{font-size:15px;color:var(--t3);animation:ha 1.5s ease infinite}
+.htt{font-size:8px;color:var(--t3);direction:rtl}
+@keyframes ha{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+#qcnt{font-size:9px;color:var(--t3);margin-top:7px;text-align:center;direction:rtl}
+.bh{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap}
+#bwt{font-size:20px;font-weight:900;color:var(--t1);direction:ltr;letter-spacing:-.5px}
+#bpr{font-size:10px;color:var(--t3);font-family:monospace;direction:ltr}
+.sec{margin-bottom:9px}
+.slbl{font-size:8px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;direction:rtl;text-align:right;display:flex;align-items:center;gap:4px}
+.slbl::after{content:'';flex:1;height:1px;background:var(--bd)}
+.fat{font-size:1.1rem;font-weight:800;color:var(--t1);direction:rtl;text-align:right;line-height:1.5}
+.ent{font-size:.7rem;color:var(--t2);line-height:1.9;direction:ltr;text-align:left}
+.ex{display:flex;align-items:flex-start;gap:6px;padding:5px 9px;background:rgba(255,255,255,.03);border-radius:6px;margin-bottom:4px;border-left:2px solid var(--bd3)}
+.light .ex{background:rgba(0,0,0,.03)}
+.ex-txt{font-size:.65rem;color:var(--t3);line-height:1.9;direction:ltr;text-align:left;font-style:italic;flex:1}
+.stags{display:flex;gap:5px;flex-wrap:wrap;direction:ltr}
+.syn-t{font-size:8px;padding:2px 7px;border-radius:99px;border:1px solid rgba(77,159,255,.3);color:var(--ac2);background:rgba(77,159,255,.07);font-weight:600;cursor:pointer}
+.ant-t{font-size:8px;padding:2px 7px;border-radius:99px;border:1px solid rgba(255,59,92,.3);color:var(--rd);background:rgba(255,59,92,.07);font-weight:600}
+.wf-row{display:flex;gap:5px;flex-wrap:wrap;direction:ltr}
+.wf-t{font-size:8px;padding:2px 7px;border-radius:99px;border:1px solid rgba(0,208,132,.3);color:var(--gr);background:rgba(0,208,132,.06);cursor:pointer}
+#nowords{display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;gap:11px}
+.done-ic{font-size:52px;animation:dfl 2s ease infinite alternate}
+@keyframes dfl{from{transform:translateY(0)}to{transform:translateY(-10px)}}
+.done-g{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;width:100%}
+.done-s{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:11px 5px;text-align:center}
+.done-n{font-size:20px;font-weight:900}
+.done-l{font-size:8px;color:var(--t3);direction:rtl;margin-top:2px}
+#showbtn{margin:0 10px 6px;padding:12px;border-radius:var(--rs);border:1px solid var(--bd3);background:rgba(255,255,255,.04);color:var(--t2);font-size:12px;cursor:pointer;font-family:inherit;direction:rtl;flex-shrink:0}
+.light #showbtn{background:rgba(0,0,0,.04)}
+#rrow{display:none;flex-direction:row;gap:6px;padding:0 10px 10px;flex-shrink:0}
+.rbtn{flex:1;padding:10px 2px;border-radius:var(--rs);border:1px solid;background:rgba(0,0,0,.15);font-size:9px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:inherit;position:relative;overflow:hidden;direction:rtl}
+.rbtn::before{content:'';position:absolute;inset:0;background:currentColor;opacity:.06}
+.rbtn:active{transform:scale(.92)}
+.re{font-size:17px}.rd2{font-size:7px;color:var(--t3);margin-top:-2px}
+#r0{border-color:rgba(255,59,92,.4);color:var(--rd)}
+#r1{border-color:rgba(255,140,0,.4);color:var(--or)}
+#r2{border-color:rgba(0,208,132,.4);color:var(--gr)}
+#r3{border-color:rgba(255,215,0,.4);color:var(--gd)}
+/* STATS */
+.sc{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);padding:14px;position:relative;overflow:hidden}
+.light .sc{background:#fff}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--ac),var(--pu))}
+.sct{font-size:13px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;margin-bottom:11px;direction:rtl}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.bnum{font-size:34px;font-weight:900;letter-spacing:-2px;line-height:1}
+.strc{background:linear-gradient(135deg,rgba(255,140,0,.1),rgba(255,140,0,.03));border:1px solid rgba(255,140,0,.2);border-radius:var(--rs);padding:13px;display:flex;align-items:center;gap:11px}
+.strf{font-size:34px;animation:fp 1.5s ease infinite alternate}
+@keyframes fp{from{transform:scale(1)}to{transform:scale(1.1)}}
+.strn{font-size:34px;font-weight:900;color:var(--or);letter-spacing:-2px;line-height:1}
+.strl{font-size:9px;color:var(--t3);direction:rtl;margin-top:2px}
+.lvrow{display:flex;align-items:center;gap:7px;padding:8px 0;border-bottom:1px solid var(--bd)}
+.lvrow:last-child{border-bottom:none}
+.lvbdg{font-size:8px;font-weight:800;padding:2px 7px;border-radius:99px;border:1px solid;letter-spacing:.5px;min-width:28px;text-align:center}
+.lvi{flex:1;color:var(--t2);font-size:10px;direction:rtl}
+.lvb{height:4px;background:var(--bd);border-radius:99px;overflow:hidden;margin-top:3px;width:75px}
+.lvbf{height:100%;border-radius:99px}
+.lvp{font-size:9px;color:var(--t3)}
+.dntw{display:flex;align-items:center;gap:14px}
+.dntl{display:flex;flex-direction:column;gap:5px;direction:rtl}
+.dli{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--t2)}
+.dld{width:7px;height:7px;border-radius:50%}
+.wch{display:flex;gap:3px;align-items:flex-end;height:56px;margin-top:7px}
+.wcb{flex:1;border-radius:3px 3px 0 0;min-height:4px;position:relative}
+.wcv{position:absolute;top:-15px;left:0;right:0;text-align:center;font-size:7px;color:var(--t2);font-weight:700}
+.wcl{position:absolute;bottom:-15px;left:0;right:0;text-align:center;font-size:7px;color:var(--t3)}
+.wrdi{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--bd)}
+.wrdi:last-child{border-bottom:none}
+.wrdw{font-weight:700;flex:1;direction:ltr;font-size:10px}
+.wrdp{font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;border:1px solid}
+/* SETTINGS */
+.cfgs{background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);overflow:hidden}
+.light .cfgs{background:#fff}
+.cfgsh{font-size:13px;color:var(--t3);letter-spacing:2px;text-transform:uppercase;padding:11px 13px 7px;border-bottom:1px solid var(--bd);direction:rtl}
+.cfgr{display:flex;align-items:center;justify-content:space-between;padding:16px 14px;border-bottom:1px solid var(--bd2)}
+.cfgr:last-child{border-bottom:none}
+.cfgl{direction:rtl}
+.cfgt{font-size:15px;font-weight:600}
+.cfgd{font-size:12px;color:var(--t3);margin-top:2px;direction:rtl}
+.nmbtn{width:32px;height:32px;border-radius:var(--rx);border:1px solid var(--bd2);background:var(--bg3);color:var(--t1);font-size:18px;cursor:pointer;font-family:inherit}
+.nmv{font-size:18px;font-weight:800;min-width:30px;text-align:center}
+.tog{width:52px;height:28px;border-radius:99px;border:none;cursor:pointer;position:relative;transition:var(--tr);flex-shrink:0}
+.tog.on{background:var(--ac)}.tog.off{background:var(--bd3)}
+.tok{position:absolute;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:var(--tr);box-shadow:0 2px 5px rgba(0,0,0,.3)}
+.tog.on .tok{left:20px}.tog.off .tok{left:3px}
+.seg{display:flex;background:var(--bg3);border:1px solid var(--bd2);border-radius:var(--rx);overflow:hidden}
+.sgo{flex:1;padding:5px 3px;border:none;background:none;font-size:9px;font-weight:700;color:var(--t3);cursor:pointer;font-family:inherit}
+.sgo.on{background:var(--ac);color:#fff}
+.fsrow{display:flex;gap:5px}
+.fsbtn{width:44px;height:36px;border-radius:var(--rx);border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);cursor:pointer;font-family:inherit;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0;font-size:13px}
+.fsbtn.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+/* PROFILE */
+.ph{text-align:center;padding:20px 14px;background:radial-gradient(ellipse,rgba(26,108,240,.09),transparent);border-radius:var(--r);border:1px solid var(--bd2)}
+.pav{font-size:48px;margin-bottom:7px}
+.pnm{font-size:20px;font-weight:900;letter-spacing:-.5px;margin-bottom:2px}
+.psi{font-size:9px;color:var(--t3);direction:rtl;margin-bottom:12px}
+.pbdgs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap}
+.bdgi{display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px;background:var(--bg2);border:1px solid var(--bd2);border-radius:var(--rs);min-width:52px}
+.bdgi.ok{border-color:var(--gd);background:rgba(255,215,0,.06)}
+.bdgic{font-size:20px}
+.bdgl{font-size:8px;color:var(--t3);direction:rtl;text-align:center}
+.bdgi.ok .bdgl{color:var(--gd)}
+.hisi{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--bd);direction:rtl}
+.hisi:last-child{border-bottom:none}
+.hisd{font-size:9px;color:var(--t3);min-width:48px}
+.hisb{flex:1;height:5px;background:var(--bd);border-radius:99px;overflow:hidden}
+.hisf{height:100%;background:linear-gradient(90deg,var(--ac),var(--pu));border-radius:99px}
+.hisn{font-size:9px;color:var(--t2);min-width:28px;text-align:left}
+/* WORDS */
+.sbox{width:100%;padding:10px 13px;background:var(--bg3);border:1px solid var(--bd2);border-radius:var(--rx);color:var(--t1);font-size:12px;outline:none;font-family:inherit;direction:rtl;margin-bottom:9px;-webkit-user-select:text;user-select:text}
+.sbox:focus{border-color:var(--ac)}
+.frow{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px}
+.fchip{padding:4px 10px;border-radius:99px;border:1px solid var(--bd);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--t3)}
+.fchip.on{background:rgba(255,255,255,.08);color:var(--t1)}
+.light .fchip.on{background:rgba(0,0,0,.08)}
+.wi{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rx);padding:9px 11px;display:flex;align-items:center;gap:9px;cursor:pointer;margin-bottom:4px}
+.light .wi{background:#f0f4f8}
+.wdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;box-shadow:0 0 5px currentColor}
+.ww{font-size:15px;font-weight:700;flex:1;direction:ltr}
+.wf2{font-size:13px;color:var(--t3);direction:rtl}
+.wbd{font-size:11px;font-weight:800;padding:2px 6px;border-radius:99px;border:1px solid;letter-spacing:.5px}
+.wm{font-size:9px;color:var(--t3);min-width:28px;text-align:center}
+.stag{font-size:8px;padding:2px 6px;border-radius:99px;background:rgba(184,127,255,.1);border:1px solid rgba(184,127,255,.3);color:var(--pu);margin-left:4px}
+/* QUIZ */
+#quiz{background:transparent;padding-top:10px}
+.q4-choice{width:100%;padding:11px 9px;border-radius:var(--rs);border:1px solid var(--bd2);background:var(--bg3);color:var(--t1);font-family:inherit;cursor:pointer;font-size:11px;font-weight:600;direction:rtl;text-align:right;line-height:1.5;margin-bottom:6px}
+.q4-choice:active{transform:scale(.97)}
+.q4-choice.correct{border-color:var(--gr);background:rgba(0,208,132,.12);color:var(--gr)}
+.q4-choice.wrong{border-color:var(--rd);background:rgba(255,59,92,.12);color:var(--rd)}
+.q4-choice.show-c{border-color:var(--gr);background:rgba(0,208,132,.07)}
+/* BOTTOM NAV */
+#bnav{display:flex;border-top:1px solid var(--bd);background:rgba(6,13,24,.95);flex-shrink:0;position:relative;z-index:10;padding-bottom:env(safe-area-inset-bottom)}
+.light #bnav{background:rgba(240,244,248,.95)}
+.nind{position:absolute;top:0;left:0;height:2px;width:20%;background:linear-gradient(90deg,var(--ac),var(--pu));border-radius:0 0 99px 99px;transition:left .25s cubic-bezier(.4,0,.2,1),width .25s}
+.bnt{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;cursor:pointer;border:none;background:none;color:var(--t3);gap:2px;font-family:inherit}
+.bnt.on{color:var(--ac2)}
+.bico{font-size:19px}
+.bnt.on .bico{transform:translateY(-1px)}
+.blbl{font-size:12px;font-weight:600}
+/* TOAST */
+#toast{position:fixed;bottom:70px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(11,22,40,.96);border:1px solid var(--bd3);padding:9px 16px;border-radius:var(--rx);font-size:11px;color:var(--t1);display:none;z-index:9999;white-space:nowrap;direction:rtl;opacity:0;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* EFFECTS */
+.conf{position:fixed;width:7px;height:7px;border-radius:2px;pointer-events:none;z-index:9998;animation:cF 1.5s ease-in forwards}
+@keyframes cF{0%{opacity:1;transform:translateY(-5px) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+.xpp{position:fixed;pointer-events:none;z-index:9997;font-size:12px;font-weight:900;animation:xpF .8s ease-out forwards}
+@keyframes xpF{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-50px)}}
+.morebtn{padding:12px 22px;border-radius:var(--rs);border:none;background:linear-gradient(135deg,var(--ac),#0850c0);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+#wl{display:flex;flex-direction:column;gap:5px;width:100%;}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="nav">
+    <div class="nav-l" onclick="gotoTab('welcome')" style="cursor:pointer"><span style="font-size:19px">⚡</span><span class="nav-ttl">FlashCards 4U</span></div>
+    <div class="nav-r">
+      <div id="sp-pill">🔥<span id="snav">0</span></div>
+      <div id="xp-pill">⭐<span id="xnav">0</span></div>
+      <button id="lvlbtn">A1▾</button>
+      <button id="settings-quick-btn" title="تنظیمات" style="background:none;border:none;cursor:pointer;font-size:20px;padding:4px 8px;color:var(--t1)">⚙️</button><button id="thmbtn">🌙</button>
+    </div>
+  </div>
+  <div id="screens">
+
+    <!-- LOGIN -->
+    <div id="login" class="scr on">
+      <div class="lbox">
+        <div class="l-logo">⚡📚</div>
+        <div class="l-ttl">FlashCards 4U</div>
+        <div class="l-sub">یادگیری هوشمند کارت‌ها انگلیسی — علیرضا بیات</div>
+        <div id="ulsec" style="display:none">
+          <div id="ul" class="ul"></div>
+          <div class="or-d"><div class="or-l"></div>یا کاربر جدید<div class="or-l"></div></div>
+        </div>
+        <div class="inp-g"><div class="inp-l">نام شما</div><input class="inp" id="uinp" placeholder="مثلاً: علیرضا" maxlength="20" autocomplete="off"></div>
+        <div class="inp-g"><div class="inp-l">آواتار</div><div class="av-row" id="avr"></div></div>
+        <button class="l-btn" id="login-btn">ورود / ساخت پروفایل →</button>
+      </div>
+    </div>
+
+    <!-- WELCOME -->
+    <div id="welcome" class="scr">
+      <!-- Quick user selector on welcome -->
+      <div id="wl-user-bar" class="card2" style="display:none;padding:10px 13px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <div style="font-size:10px;color:var(--t3);direction:rtl">کاربر فعال:</div>
+          <button id="wl-switch-btn" style="font-size:9px;padding:3px 10px;border-radius:99px;border:1px solid var(--bd2);background:none;color:var(--t3);cursor:pointer;font-family:inherit">تغییر کاربر</button>
+        </div>
+        <div id="wl-user-info" style="display:flex;align-items:center;gap:10px">
+          <div id="wl-uav" style="font-size:28px"></div>
+          <div>
+            <div id="wl-uname" style="font-size:13px;font-weight:800;direction:rtl"></div>
+            <div id="wl-ulv" style="font-size:9px;color:var(--t3);direction:rtl"></div>
+          </div>
+          <button id="wl-lvl-btn" style="margin-left:auto;padding:6px 12px;border-radius:99px;border:1px solid;font-size:9px;font-weight:800;cursor:pointer;font-family:inherit;background:none">تغییر سطح</button>
+        </div>
+      </div>
+      <div class="wh">
+        <div class="wav" id="wav">🧑</div>
+        <div class="wnm" id="wnm">کاربر</div>
+        <div class="wlv" id="wlv">سطح A1</div>
+        <div class="wsr">
+          <div class="wst"><div class="wsn" id="wstr" style="color:var(--or)">0🔥</div><div class="wsl">streak</div></div>
+          <div class="wst"><div class="wsn" id="wxp" style="color:var(--gd)">0⭐</div><div class="wsl">XP</div></div>
+          <div class="wst"><div class="wsn" id="wmas" style="color:var(--gr)">0%</div><div class="wsl">تسلط</div></div>
+        </div>
+        <div class="wbgs" id="wbgs"></div>
+      </div>
+      <div class="wgreet" id="wgreet">سلام! آماده یادگیری هستی؟</div>
+      <div class="card2">
+        <div class="c2t">⚡ چرا فلش‌کارت؟</div>
+        <div class="c2r"><span style="font-size:14px">🧠</span><span>مغز با <b>تکرار هوشمند</b> بهتر یاد می‌گیره — هر کارت دقیقاً وقتی داری فراموشش می‌کنی نشون داده می‌شه.</span></div>
+        <div class="c2r"><span style="font-size:14px">📈</span><span>این روش تا <b>۳ برابر سریع‌تر</b> از روش‌های سنتی کار می‌کنه.</span></div>
+        <div class="c2r"><span style="font-size:14px">🎯</span><span>کارت‌ها + اصطلاحات + Collocation + گرامر + ضرب‌المثل — همه در یک جا.</span></div>
+      </div>
+      <div class="card2">
+        <div class="c2t">🎮 نحوه ارزیابی</div>
+        <div class="rg">
+          <div class="rb" style="border-color:rgba(255,59,92,.3);color:var(--rd);background:rgba(255,59,92,.04)">😓 <b>فراموش</b><br><small style="color:var(--t3)">اصلاً یادم نبود</small></div>
+          <div class="rb" style="border-color:rgba(255,140,0,.3);color:var(--or);background:rgba(255,140,0,.04)">😐 <b>سخت</b><br><small style="color:var(--t3)">با سختی یادم اومد</small></div>
+          <div class="rb" style="border-color:rgba(0,208,132,.3);color:var(--gr);background:rgba(0,208,132,.04)">😊 <b>خوب</b><br><small style="color:var(--t3)">راحت یادم بود</small></div>
+          <div class="rb" style="border-color:rgba(255,215,0,.3);color:var(--gd);background:rgba(255,215,0,.04)">🌟 <b>آسان</b><br><small style="color:var(--t3)">مثل آب خوردن!</small></div>
+        </div>
+        <div class="c2r" style="margin-top:9px"><span style="font-size:14px">👈</span><span>سوایپ راست = آسان | سوایپ چپ = فراموش</span></div>
+      </div>
+      <div class="card2" style="background:linear-gradient(135deg,rgba(26,108,240,.06),rgba(0,208,132,.06));border-color:rgba(77,159,255,.2)">
+        <div class="c2t" style="color:var(--ac2)">💎 درباره این اپ</div>
+        <div id="motiv-text" style="font-size:11px;color:var(--t2);line-height:2.1;direction:rtl;margin-bottom:9px"></div>
+        <div style="font-size:10px;color:var(--t3);direction:rtl;border-top:1px solid var(--bd);padding-top:9px;line-height:2">
+          ✨ این اپلیکیشن <b style="color:var(--gr)">هوشمند</b> و <b style="color:var(--gr)">کاملاً رایگان</b> با الگوریتم SRS برای آموزش بهتر زبان انگلیسی به شما تقدیم می‌گردد 🎁<br>
+          📚 <b>5,694 کارت</b> | A1→C2 | گرامر | ضرب‌المثل | AWL | پزشکی | تجاری | فناوری<br>
+          👤 <b style="color:var(--ac2)">طراح: علیرضا بیات</b>
+        </div>
+      </div>
+      <!-- Dashboard quick actions -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+        <button class="s-btn" id="start-btn" style="padding:14px;font-size:12px">⚡ شروع مطالعه</button>
+        <button id="dash-lvl-btn" style="padding:14px;border-radius:var(--rs);border:1px solid var(--ac2);background:rgba(77,159,255,.08);color:var(--ac2);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">🎯 انتخاب سطح</button>
+        <button id="dash-quiz-btn" style="padding:14px;border-radius:var(--rs);border:1px solid var(--pu);background:rgba(184,127,255,.08);color:var(--pu);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">🧪 آزمون</button>
+        <button id="dash-words-btn" style="padding:14px;border-radius:var(--rs);border:1px solid var(--gr);background:rgba(0,208,132,.08);color:var(--gr);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">📋 لیست کارت‌ها</button>
+        <button id="dash-stats-btn" style="padding:14px;border-radius:var(--rs);border:1px solid var(--or);background:rgba(255,140,0,.08);color:var(--or);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">📊 آمار</button>
+        <button id="dash-settings-btn" style="padding:14px;border-radius:var(--rs);border:1px solid var(--t3);background:rgba(255,255,255,.04);color:var(--t2);font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">⚙️ تنظیمات</button>
+      </div>
+    </div>
+
+    <!-- LEVEL PICKER -->
+    <div id="lvls" class="scr">
+      <div class="lph">انتخاب سطح</div>
+      <div class="lps">Choose Your Level</div>
+      <div class="lsc-row"><div class="lsc" id="lv_ALL" style="color:var(--ac2);border-color:rgba(77,159,255,.2)"><div class="lsg"></div><span style="font-size:20px">🌐</span><div><div class="lsnm">همه سطح‌ها</div><div class="lsen">ALL</div></div><div class="lsct" id="cnt_ALL"></div></div><button class="lsc-quiz-btn" id="qbtn_ALL" style="color:var(--ac2);border-color:var(--ac2)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_A1" style="color:var(--A1)"><div class="lsg"></div><span style="font-size:20px">🌱</span><div><div class="lsnm">A1</div><div class="lsen">Beginner</div><div class="lsfa">مبتدی</div></div><div class="lsct" id="cnt_A1"></div></div><button class="lsc-quiz-btn" id="qbtn_A1" style="color:var(--A1);border-color:var(--A1)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_A2" style="color:var(--A2)"><div class="lsg"></div><span style="font-size:20px">🌿</span><div><div class="lsnm">A2</div><div class="lsen">Elementary</div><div class="lsfa">مقدماتی</div></div><div class="lsct" id="cnt_A2"></div></div><button class="lsc-quiz-btn" id="qbtn_A2" style="color:var(--A2);border-color:var(--A2)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_B1" style="color:var(--B1)"><div class="lsg"></div><span style="font-size:20px">🌳</span><div><div class="lsnm">B1</div><div class="lsen">Intermediate</div><div class="lsfa">متوسط</div></div><div class="lsct" id="cnt_B1"></div></div><button class="lsc-quiz-btn" id="qbtn_B1" style="color:var(--B1);border-color:var(--B1)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_B2" style="color:var(--B2)"><div class="lsg"></div><span style="font-size:20px">🦅</span><div><div class="lsnm">B2</div><div class="lsen">Upper-Inter.</div><div class="lsfa">فوق متوسط</div></div><div class="lsct" id="cnt_B2"></div></div><button class="lsc-quiz-btn" id="qbtn_B2" style="color:var(--B2);border-color:var(--B2)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_C1" style="color:var(--C1)"><div class="lsg"></div><span style="font-size:20px">🔥</span><div><div class="lsnm">C1</div><div class="lsen">Advanced</div><div class="lsfa">پیشرفته</div></div><div class="lsct" id="cnt_C1"></div></div><button class="lsc-quiz-btn" id="qbtn_C1" style="color:var(--C1);border-color:var(--C1)">آزمون</button></div>
+      <div class="lsc-row"><div class="lsc" id="lv_C2" style="color:var(--C2)"><div class="lsg"></div><span style="font-size:20px">🏆</span><div><div class="lsnm">C2</div><div class="lsen">Mastery</div><div class="lsfa">تسلط کامل</div></div><div class="lsct" id="cnt_C2"></div></div><button class="lsc-quiz-btn" id="qbtn_C2" style="color:var(--C2);border-color:var(--C2)">آزمون</button></div>
+      <div style="font-size:10px;color:var(--t3);direction:rtl;text-align:center;padding:4px 0 2px;letter-spacing:1px;text-transform:uppercase">دسته‌های دستوری</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:4px">
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_VRB" style="color:var(--VRB)"><div class="lsg"></div><span class="scat-ico">⚡</span><div><div class="scat-nm">افعال</div><div class="scat-en">Verbs</div><div class="scat-ct" id="cnt_VRB"></div></div></div>
+          <button class="scat-quiz" id="qbtn_VRB" style="color:var(--VRB);border-color:var(--VRB)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_ADJ" style="color:var(--ADJ)"><div class="lsg"></div><span class="scat-ico">🎨</span><div><div class="scat-nm">صفت‌ها</div><div class="scat-en">Adjectives</div><div class="scat-ct" id="cnt_ADJ"></div></div></div>
+          <button class="scat-quiz" id="qbtn_ADJ" style="color:var(--ADJ);border-color:var(--ADJ)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_ADV" style="color:var(--ADV)"><div class="lsg"></div><span class="scat-ico">💨</span><div><div class="scat-nm">قیدها</div><div class="scat-en">Adverbs</div><div class="scat-ct" id="cnt_ADV"></div></div></div>
+          <button class="scat-quiz" id="qbtn_ADV" style="color:var(--ADV);border-color:var(--ADV)">آزمون</button>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--t3);direction:rtl;text-align:center;padding:4px 0 2px">دسته‌های ویژه</div>
+      <div class="special-grid">
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_PHR" style="color:var(--PHR)"><div class="lsg"></div><span class="scat-ico">💬</span><div><div class="scat-nm">جملات روزمره</div><div class="scat-en">Daily Phrases</div><div class="scat-ct" id="cnt_PHR"></div></div></div>
+          <button class="scat-quiz" id="qbtn_PHR" style="color:var(--PHR);border-color:var(--PHR)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_GR" style="color:var(--GR)"><div class="lsg"></div><span class="scat-ico">📝</span><div><div class="scat-nm">گرامر</div><div class="scat-en">Grammar</div><div class="scat-ct" id="cnt_GR"></div></div></div>
+          <button class="scat-quiz" id="qbtn_GR" style="color:var(--GR);border-color:var(--GR)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_PRV" style="color:var(--PRV)"><div class="lsg"></div><span class="scat-ico">💬</span><div><div class="scat-nm">ضرب‌المثل</div><div class="scat-en">Proverbs</div><div class="scat-ct" id="cnt_PRV"></div></div></div>
+          <button class="scat-quiz" id="qbtn_PRV" style="color:var(--PRV);border-color:var(--PRV)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_AWL" style="color:var(--AWL)"><div class="lsg"></div><span class="scat-ico">🎓</span><div><div class="scat-nm">دانشگاهی</div><div class="scat-en">Academic</div><div class="scat-ct" id="cnt_AWL"></div></div></div>
+          <button class="scat-quiz" id="qbtn_AWL" style="color:var(--AWL);border-color:var(--AWL)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_MED" style="color:var(--MED)"><div class="lsg"></div><span class="scat-ico">🏥</span><div><div class="scat-nm">پزشکی</div><div class="scat-en">Medical</div><div class="scat-ct" id="cnt_MED"></div></div></div>
+          <button class="scat-quiz" id="qbtn_MED" style="color:var(--MED);border-color:var(--MED)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_BIZ" style="color:var(--BIZ)"><div class="lsg"></div><span class="scat-ico">💼</span><div><div class="scat-nm">تجاری</div><div class="scat-en">Business</div><div class="scat-ct" id="cnt_BIZ"></div></div></div>
+          <button class="scat-quiz" id="qbtn_BIZ" style="color:var(--BIZ);border-color:var(--BIZ)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_TECH" style="color:var(--TECH)"><div class="lsg"></div><span class="scat-ico">💻</span><div><div class="scat-nm">فناوری</div><div class="scat-en">Technology</div><div class="scat-ct" id="cnt_TECH"></div></div></div>
+          <button class="scat-quiz" id="qbtn_TECH" style="color:var(--TECH);border-color:var(--TECH)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_HOM" style="color:var(--HOM)"><div class="lsg"></div><span class="scat-ico">🏠</span><div><div class="scat-nm">وسایل خانه</div><div class="scat-en">Home</div><div class="scat-ct" id="cnt_HOM"></div></div></div>
+          <button class="scat-quiz" id="qbtn_HOM" style="color:var(--HOM);border-color:var(--HOM)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_BOD" style="color:var(--BOD)"><div class="lsg"></div><span class="scat-ico">🫀</span><div><div class="scat-nm">اعضای بدن</div><div class="scat-en">Body</div><div class="scat-ct" id="cnt_BOD"></div></div></div>
+          <button class="scat-quiz" id="qbtn_BOD" style="color:var(--BOD);border-color:var(--BOD)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_FOD" style="color:var(--FOD)"><div class="lsg"></div><span class="scat-ico">🍎</span><div><div class="scat-nm">غذا</div><div class="scat-en">Food</div><div class="scat-ct" id="cnt_FOD"></div></div></div>
+          <button class="scat-quiz" id="qbtn_FOD" style="color:var(--FOD);border-color:var(--FOD)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_NAT" style="color:var(--NAT)"><div class="lsg"></div><span class="scat-ico">🌍</span><div><div class="scat-nm">طبیعت</div><div class="scat-en">Nature</div><div class="scat-ct" id="cnt_NAT"></div></div></div>
+          <button class="scat-quiz" id="qbtn_NAT" style="color:var(--NAT);border-color:var(--NAT)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_TRN" style="color:var(--TRN)"><div class="lsg"></div><span class="scat-ico">🚗</span><div><div class="scat-nm">حمل‌ونقل</div><div class="scat-en">Transport</div><div class="scat-ct" id="cnt_TRN"></div></div></div>
+          <button class="scat-quiz" id="qbtn_TRN" style="color:var(--TRN);border-color:var(--TRN)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_HLT" style="color:var(--HLT)"><div class="lsg"></div><span class="scat-ico">💊</span><div><div class="scat-nm">سلامت</div><div class="scat-en">Health</div><div class="scat-ct" id="cnt_HLT"></div></div></div>
+          <button class="scat-quiz" id="qbtn_HLT" style="color:var(--HLT);border-color:var(--HLT)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_EMO" style="color:var(--EMO)"><div class="lsg"></div><span class="scat-ico">❤️</span><div><div class="scat-nm">احساسات</div><div class="scat-en">Emotions</div><div class="scat-ct" id="cnt_EMO"></div></div></div>
+          <button class="scat-quiz" id="qbtn_EMO" style="color:var(--EMO);border-color:var(--EMO)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_CLO" style="color:var(--CLO)"><div class="lsg"></div><span class="scat-ico">👕</span><div><div class="scat-nm">پوشاک</div><div class="scat-en">Clothing</div><div class="scat-ct" id="cnt_CLO"></div></div></div>
+          <button class="scat-quiz" id="qbtn_CLO" style="color:var(--CLO);border-color:var(--CLO)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_EDU" style="color:var(--EDU)"><div class="lsg"></div><span class="scat-ico">📚</span><div><div class="scat-nm">تحصیل</div><div class="scat-en">Education</div><div class="scat-ct" id="cnt_EDU"></div></div></div>
+          <button class="scat-quiz" id="qbtn_EDU" style="color:var(--EDU);border-color:var(--EDU)">آزمون</button>
+        </div>
+        </div>
+          <button class="scat-quiz" id="qbtn_ADV" style="color:var(--ADV);border-color:var(--ADV)">آزمون</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDY -->
+    <div id="study" class="scr" style="padding:0;overflow:hidden">
+      <div id="sw" style="display:flex;flex-direction:column;height:100%">
+        <div id="ca" style="flex:1;display:flex;align-items:center;justify-content:center;padding:8px 10px;position:relative;overflow:hidden;min-height:0">
+          <div id="spb" style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--bd);z-index:5"><div id="spf" style="width:0%;height:100%;background:linear-gradient(90deg,var(--ac),var(--pu));transition:width .6s;border-radius:0 3px 3px 0"></div></div>
+          <div id="fc" style="width:100%;max-width:420px;perspective:1200px">
+            <div id="card">
+              <div class="cs" id="cf"><div class="crib" id="frib"></div><div class="cin">
+                <div id="wlvl">🌱 A1</div><div id="wpos">noun</div><div id="wmain">word</div>
+                <div class="prr"><div id="wpron">/wɜːrd/</div><button class="abtn" id="fabtn">🔊 تلفظ</button><span id="wtype"></span></div>
+                <div class="cft"><svg width="44" height="44" viewBox="0 0 48 48"><circle class="mrbg" cx="24" cy="24" r="20"/><circle class="mrfill" id="mring" cx="24" cy="24" r="20" stroke-dasharray="125.7" stroke-dashoffset="125.7" transform="rotate(-90 24 24)"/></svg><div id="mpct">0%</div><div class="htw"><div class="hta">▼</div><div class="htt">بزن تا معنی ببینی</div></div></div>
+                <div id="qcnt"></div>
+              </div></div>
+              <div class="cs" id="cb"><div class="crib" id="brib"></div><div class="cin">
+                <div class="bh"><span id="bwt">word</span><button class="abtn" id="abbtn">🔊</button><span id="bpr">/wɜːrd/</span></div>
+                <div class="sec"><div class="slbl">🇮🇷 معنی فارسی</div><div class="fat" id="fat">معنی</div></div>
+                <div class="sec"><div class="slbl">🇺🇸 Definition</div><div class="ent" id="ent">def</div></div>
+                <div class="sec"><div class="slbl">💬 Examples</div><div class="ex" id="ex1"></div><div class="ex" id="ex2"></div></div>
+                <div class="sec" id="synsec" style="display:none"><div class="slbl">🔗 مترادف / متضاد</div><div id="stags" class="stags"></div></div>
+                <div class="sec" id="wfsec" style="display:none"><div class="slbl">👨‍👩‍👧 خانواده کارت</div><div id="wftags" class="wf-row"></div></div>
+              </div></div>
+            </div>
+          </div>
+        </div>
+        <div id="nowords" style="display:none;flex:1;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;gap:10px">
+          <div class="done-ic">🎉</div><div style="font-size:17px;font-weight:800;direction:rtl">جلسه تموم شد!</div>
+          <div class="done-g">
+            <div class="done-s"><div class="done-n" id="dn-rev" style="color:var(--ac2)">0</div><div class="done-l">مرور</div></div>
+            <div class="done-s"><div class="done-n" id="dn-mas" style="color:var(--gr)">0</div><div class="done-l">تسلط</div></div>
+            <div class="done-s"><div class="done-n" id="dn-xp" style="color:var(--gd)">0</div><div class="done-l">XP</div></div>
+          </div>
+          <button class="morebtn" id="more-btn">بیشتر مطالعه کن →</button>
+        </div>
+      </div>
+      <button id="showbtn">نشون بده ▼</button>
+      <div id="rrow">
+        <button class="rbtn" id="r0"><span class="re">😓</span>فراموش<span class="rd2">دوباره</span></button>
+        <button class="rbtn" id="r1"><span class="re">😐</span>سخت<span class="rd2">۱-۲ روز</span></button>
+        <button class="rbtn" id="r2"><span class="re">😊</span>خوب<span class="rd2">چند روز</span></button>
+        <button class="rbtn" id="r3"><span class="re">🌟</span>آسان<span class="rd2">هفتگی</span></button>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz" class="scr">
+      <div class="sc" id="quiz-setup">
+        <div class="sct">🧪 آزمون چهار گزینه‌ای</div>
+        <div style="margin-bottom:12px">
+          <div style="font-size:10px;color:var(--t3);direction:rtl;margin-bottom:6px">سطح:</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="sgo on" data-v="ALL" id="ql-ALL" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--ac);background:var(--ac);color:#fff;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">همه</button>
+            <button class="sgo" data-v="A1" id="ql-A1" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--A1);color:var(--A1);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">A1</button>
+            <button class="sgo" data-v="A2" id="ql-A2" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--A2);color:var(--A2);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">A2</button>
+            <button class="sgo" data-v="B1" id="ql-B1" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--B1);color:var(--B1);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">B1</button>
+            <button class="sgo" data-v="B2" id="ql-B2" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--B2);color:var(--B2);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">B2</button>
+            <button class="sgo" data-v="C1" id="ql-C1" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--C1);color:var(--C1);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">C1</button>
+            <button class="sgo" data-v="C2" id="ql-C2" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--C2);color:var(--C2);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">C2</button>
+            <button class="sgo" data-v="GR" id="ql-GR" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--GR);color:var(--GR);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">📝</button>
+            <button class="sgo" data-v="PRV" id="ql-PRV" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--PRV);color:var(--PRV);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">💬</button>
+            <button class="sgo" data-v="AWL" id="ql-AWL" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--AWL);color:var(--AWL);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🎓</button>
+            <button class="sgo" data-v="MED" id="ql-MED" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--MED);color:var(--MED);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🏥</button>
+            <button class="sgo" data-v="BIZ" id="ql-BIZ" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--BIZ);color:var(--BIZ);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">💼</button>
+            <button class="sgo" data-v="TECH" id="ql-TECH" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--TECH);color:var(--TECH);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">💻</button>
+            <button class="sgo" data-v="HOM" id="ql-HOM" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--HOM);color:var(--HOM);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🏠</button>
+            <button class="sgo" data-v="BOD" id="ql-BOD" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--BOD);color:var(--BOD);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🫀</button>
+            <button class="sgo" data-v="FOD" id="ql-FOD" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--FOD);color:var(--FOD);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🍎</button>
+            <button class="sgo" data-v="NAT" id="ql-NAT" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--NAT);color:var(--NAT);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">🌍</button>
+            <button class="sgo" data-v="HLT" id="ql-HLT" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--HLT);color:var(--HLT);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">💊</button>
+            <button class="sgo" data-v="EMO" id="ql-EMO" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--EMO);color:var(--EMO);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">❤️</button>
+            <button class="sgo" data-v="CLO" id="ql-CLO" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--CLO);color:var(--CLO);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">👕</button>
+            <button class="sgo" data-v="EDU" id="ql-EDU" style="padding:6px 10px;border-radius:var(--rx);border:1px solid var(--EDU);color:var(--EDU);background:none;font-size:10px;font-weight:700;cursor:pointer;font-family:inherit">📚</button>
+            <button class="sgo" data-v="VRB" id="ql-VRB" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--VRB);color:var(--VRB);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">⚡ Verbs</button>
+            <button class="sgo" data-v="ADJ" id="ql-ADJ" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--ADJ);color:var(--ADJ);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🎨 Adj</button>
+            <button class="sgo" data-v="ADV" id="ql-ADV" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--ADV);color:var(--ADV);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">💨 Adv</button>
+            <button class="sgo" data-v="PHR" id="ql-PHR" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--PHR);color:var(--PHR);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">💬 Phrases</button>
+            <button class="sgo" data-v="SPT" id="ql-SPT" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--SPT);color:var(--SPT);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">⚽ Sports</button>
+            <button class="sgo" data-v="SCI" id="ql-SCI" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--SCI);color:var(--SCI);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🔬 Science</button>
+            <button class="sgo" data-v="ART" id="ql-ART" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--ART);color:var(--ART);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🎭 Arts</button>
+            <button class="sgo" data-v="ENV" id="ql-ENV" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--ENV);color:var(--ENV);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🌿 Env</button>
+            <button class="sgo" data-v="WRK" id="ql-WRK" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--WRK);color:var(--WRK);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">💼 Work</button>
+            <button class="sgo" data-v="TRV" id="ql-TRV" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--TRV);color:var(--TRV);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">✈️ Travel</button>
+            <button class="sgo" data-v="DIG" id="ql-DIG" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--DIG);color:var(--DIG);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">📱 Digital</button>
+            <button class="sgo" data-v="WEA" id="ql-WEA" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--WEA);color:var(--WEA);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">☀️ Weather</button>
+            <button class="sgo" data-v="FPR" id="ql-FPR" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--FPR);color:var(--FPR);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🍳 Cooking</button>
+            <button class="sgo" data-v="LAW" id="ql-LAW" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--LAW);color:var(--LAW);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">⚖️ Law</button>
+            <button class="sgo" data-v="PSY" id="ql-PSY" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--PSY);color:var(--PSY);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🧠 Psychology</button>
+            <button class="sgo" data-v="COL" id="ql-COL" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--COL);color:var(--COL);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🔗 Collocations</button>
+            <button class="sgo" data-v="PV" id="ql-PV" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--PV);color:var(--PV);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🔀 Phrasal V.</button>
+            <button class="sgo" data-v="IDM" id="ql-IDM" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--IDM);color:var(--IDM);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">💡 Idioms</button>
+            
+            
+            
+            
+            
+            
+            
+            
+            <button class="sgo" data-v="TRN" id="ql-TRN" style="padding:6px 8px;border-radius:var(--rx);border:1px solid var(--TRN);color:var(--TRN);background:none;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit">🚗 Transport</button>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+          <div style="font-size:10px;color:var(--t3);direction:rtl">تعداد:</div>
+          <div class="seg" id="qnum-seg" style="flex:1">
+            <button class="sgo" data-v="5">۵</button>
+            <button class="sgo on" data-v="10">۱۰</button>
+            <button class="sgo" data-v="20">۲۰</button>
+          </div>
+        </div>
+        <button id="start-quiz-btn" style="width:100%;padding:13px;border-radius:var(--rs);border:none;background:linear-gradient(135deg,var(--pu),var(--ac));color:#fff;font-size:13px;font-weight:800;cursor:pointer;font-family:inherit">شروع آزمون ←</button>
+      </div>
+      <div id="quiz-play" style="display:none">
+        <div class="sc">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+            <div style="font-size:10px;color:var(--t3);direction:rtl">سوال <span id="qnum">1</span>/<span id="qtot">10</span></div>
+            <div style="font-size:11px;color:var(--gr);font-weight:800">⭐<span id="qsc">0</span></div>
+          </div>
+          <div style="height:4px;background:var(--bd);border-radius:99px;overflow:hidden;margin-bottom:16px"><div id="qprog" style="height:100%;background:linear-gradient(90deg,var(--pu),var(--ac));border-radius:99px;transition:width .4s;width:0%"></div></div>
+          <div style="text-align:center;padding:16px 8px">
+            <div style="font-size:9px;color:var(--t3);margin-bottom:5px;direction:rtl">معنی فارسی این کارت چیست؟</div>
+            <div id="qword" style="font-size:2rem;font-weight:900;color:var(--t1);direction:ltr">word</div>
+            <div id="qipa" style="font-size:10px;color:var(--t3);font-family:monospace;margin-top:4px">/wɜːrd/</div>
+            <button id="qspk" style="margin-top:9px;padding:5px 12px;border-radius:99px;border:1px solid var(--bd2);background:rgba(255,255,255,.06);color:var(--t2);font-size:10px;cursor:pointer;font-family:inherit">🔊 تلفظ</button>
+          </div>
+          <div id="qchoices"></div>
+          <div id="qfb" style="display:none;text-align:center;padding:10px;border-radius:var(--rs);margin-top:8px;font-size:12px;font-weight:700;direction:rtl"></div>
+          <button id="qnext" style="display:none;width:100%;padding:12px;margin-top:8px;border-radius:var(--rs);border:none;background:var(--ac);color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit">بعدی →</button>
+        </div>
+      </div>
+      <div id="quiz-result" style="display:none">
+        <div class="sc" style="text-align:center">
+          <div id="qr-ico" style="font-size:52px;margin-bottom:9px">🏆</div>
+          <div id="qr-ttl" style="font-size:19px;font-weight:900;direction:rtl;margin-bottom:5px">عالی!</div>
+          <div id="qr-sc" style="font-size:34px;font-weight:900;color:var(--ac2);margin-bottom:3px">0</div>
+          <div style="font-size:9px;color:var(--t3);direction:rtl;margin-bottom:14px">امتیاز</div>
+          <div id="qr-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px"></div>
+          <button id="qr-retry" style="width:100%;padding:12px;border-radius:var(--rs);border:none;background:linear-gradient(135deg,var(--pu),var(--ac));color:#fff;font-size:12px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:7px">دوباره ↺</button>
+          <button id="qr-study" style="width:100%;padding:12px;border-radius:var(--rs);border:1px solid var(--ac2);background:none;color:var(--ac2);font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">برو مطالعه 📖</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div id="stats" class="scr">
+      <div class="strc"><div class="strf">🔥</div><div><div class="strn" id="str-big">0</div><div class="strl">روز پشت سر هم</div></div><div style="margin-left:auto;text-align:right"><div style="font-size:19px;font-weight:900;color:var(--gd)" id="xp-big">0⭐</div><div style="font-size:9px;color:var(--t3)">XP کل</div></div></div>
+      <div class="sc"><div class="sct">📊 توزیع پیشرفت</div>
+        <div class="dntw" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+          <canvas id="donut" width="96" height="96" style="flex-shrink:0"></canvas>
+          <div class="dntl">
+            <div class="dli"><div class="dld" style="background:var(--gr)"></div>تسلط: <b id="dl-m">0</b></div>
+            <div class="dli"><div class="dld" style="background:var(--or)"></div>یادگیری: <b id="dl-l">0</b></div>
+            <div class="dli"><div class="dld" style="background:var(--ac2)"></div>جدید: <b id="dl-n">0</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="sc"><div class="sct">📅 مطالعه هفته اخیر</div>
+        <div style="display:flex;gap:3px;align-items:flex-end;height:60px;margin-top:8px" id="wchart"></div>
+        <div style="display:flex;justify-content:space-around;margin-top:18px" id="wdays"></div>
+      </div>
+      <div class="sc"><div class="sct">📈 بر اساس سطح</div><div id="lvrows"></div></div>
+      <div class="g2">
+        <div class="sc"><div class="sct">🏆 بهترین</div><div id="best-w"></div></div>
+        <div class="sc"><div class="sct">⚠️ ضعیف‌ترین</div><div id="worst-w"></div></div>
+      </div>
+      <div class="g2">
+        <div class="sc"><div class="sct">امروز</div><div class="bnum" id="td-time" style="font-size:26px">0m</div></div>
+        <div class="sc"><div class="sct">پیش‌بینی تسلط</div><div class="bnum" id="mas-pred" style="font-size:20px">-</div><div style="font-size:9px;color:var(--t3);direction:rtl">روز دیگه</div></div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="profile" class="scr">
+      <div class="ph"><div class="pav" id="pav">🧑</div><div class="pnm" id="pnm">کاربر</div><div class="psi" id="psi">عضو از امروز</div><div class="pbdgs" id="pbdgs"></div></div>
+      <div class="sc"><div class="sct">تاریخچه ۷ روز اخیر</div><div id="his-list"></div></div>
+      <div class="sc"><div class="sct">تغییر کاربر</div><div id="pul" class="ul" style="margin-bottom:7px"></div><button class="l-btn" id="add-user-btn" style="font-size:11px;padding:11px">+ افزودن کاربر جدید</button></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settings" class="scr">
+      <div class="cfgs">
+        <div class="cfgsh">🔤 اندازه فونت</div>
+        <div class="cfgr" style="border-bottom:none">
+          <div class="cfgl"><div class="cfgt">اندازه متن</div><div class="cfgd">برای راحتی مطالعه</div></div>
+          <div class="fsrow" id="fsrow"></div>
+        </div>
+      </div>
+      <div class="cfgs">
+        <div class="cfgsh">⚙️ تنظیمات مطالعه</div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">کارت‌های جدید روزانه</div><div class="cfgd">در هر جلسه</div></div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <button class="nmbtn" id="dn-m">−</button>
+            <div class="nmv" id="dn-val">20</div>
+            <button class="nmbtn" id="dn-p">+</button>
+          </div>
+        </div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">ترتیب کارت‌ها</div></div>
+          <div class="seg" id="seg-order">
+            <button class="sgo on" data-v="due">موعد</button>
+            <button class="sgo" data-v="random">تصادفی</button>
+            <button class="sgo" data-v="mastery">ضعیف</button>
+          </div>
+        </div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">حالت آزمون</div><div class="cfgd">جواب نمایش داده نشود</div></div>
+          <button class="tog off" id="tog-exam"><div class="tok"></div></button>
+        </div>
+        <div class="cfgr" style="border-bottom:none">
+          <div class="cfgl"><div class="cfgt">نمایش مترادف/متضاد</div></div>
+          <button class="tog on" id="tog-syn"><div class="tok"></div></button>
+        </div>
+      </div>
+      <div class="cfgs">
+        <div class="cfgsh">🔊 صدا</div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">تلفظ خودکار</div><div class="cfgd">زمان نمایش کارت</div></div>
+          <div class="seg" id="seg-speak">
+            <button class="sgo" data-v="off">خاموش</button>
+            <button class="sgo on" data-v="front">جلو</button>
+            <button class="sgo" data-v="both">هر دو</button>
+          </div>
+        </div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">سرعت تلفظ</div></div>
+          <div class="seg" id="seg-rate">
+            <button class="sgo" data-v="slow">کند</button>
+            <button class="sgo on" data-v="normal">عادی</button>
+            <button class="sgo" data-v="fast">سریع</button>
+          </div>
+        </div>
+        <div class="cfgr" style="border-bottom:none">
+          <div class="cfgl"><div class="cfgt">لهجه</div></div>
+          <div class="seg" id="seg-accent">
+            <button class="sgo on" data-v="us">🇺🇸 آمریکایی</button>
+            <button class="sgo" data-v="uk">🇬🇧 بریتیش</button>
+          </div>
+        </div>
+      </div>
+      <div class="cfgs">
+        <div class="cfgsh">🎨 ظاهر</div>
+        <div class="cfgr"><div class="cfgl"><div class="cfgt">تم روشن/تاریک</div></div><button class="tog off" id="tog-thm"><div class="tok"></div></button></div>
+        <div class="cfgr" style="border-bottom:none"><div class="cfgl"><div class="cfgt" style="color:var(--rd)">⚠️ حذف پیشرفت</div></div><button class="nmbtn" id="reset-btn" style="width:auto;padding:5px 11px;font-size:9px;color:var(--rd);border-color:rgba(255,59,92,.4)">پاک کردن</button></div>
+      </div>
+    </div>
+
+    <!-- WORDS -->
+    <div id="words" class="scr">
+      <div class="sct" style="font-size:14px;font-weight:700;color:var(--t2);margin-bottom:8px">کتابخانه — <span id="wltot">0</span> کارت</div>
+      <input class="sbox" id="wsrch" placeholder="🔍 جستجو…" autocomplete="off" style="margin-bottom:8px">
+      <div class="frow" id="frow" style="margin-bottom:8px"></div>
+      <div id="wl"></div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- BOTTOM NAV -->
+  <div id="bnav" style="display:none">
+    <div class="nind" id="nind"></div>
+    <button class="bnt on" id="btn_welcome"><div class="bico">🏠</div><div class="blbl">خانه</div></button>
+    <button class="bnt" id="btn_study"><div class="bico">📖</div><div class="blbl">مطالعه</div></button>
+    <button class="bnt" id="btn_quiz"><div class="bico">🧪</div><div class="blbl">آزمون</div></button>
+    <button class="bnt" id="btn_stats"><div class="bico">📊</div><div class="blbl">آمار</div></button>
+    <button class="bnt" id="btn_words"><div class="bico">📋</div><div class="blbl">کارت‌ها</div></button>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script src="vocab.js"></script>
+<script>
+// vocab loaded externally
+var LC={A1:"#00d084",A2:"#00c9c9",B1:"#4d9fff",B2:"#b87fff",C1:"#ff8c00",C2:"#ff3b5c",GR:"#9b59b6",PRV:"#e67e22",AWL:"#27ae60",MED:"#e74c3c",BIZ:"#2980b9",TECH:"#8e44ad",HOM:"#e91e8c",BOD:"#00bcd4",FOD:"#8bc34a",NAT:"#4caf50",TRN:"#ff9800",HLT:"#f44336",EMO:"#9c27b0",CLO:"#ff5722",EDU:"#3f51b5",VRB:"#009688",ADJ:"#673ab7",ADV:"#607d8b",SPT:"#ff6b35",SCI:"#5c6bc0",ART:"#ab47bc",ENV:"#26a69a",WRK:"#42a5f5",TRV:"#26c6da",DIG:"#7e57c2",WEA:"#66bb6a",FPR:"#ef5350",LAW:"#8d6e63",PSY:"#ff7043",COL:"#00897b",PV:"#1e88e5",IDM:"#e53935"};
+var LE={A1:"🌱",A2:"🌿",B1:"🌳",B2:"🦅",C1:"🔥",C2:"🏆",GR:"📝",PRV:"💬",AWL:"🎓",MED:"🏥",BIZ:"💼",TECH:"💻",HOM:"🏠",BOD:"🫀",FOD:"🍎",NAT:"🌍",TRN:"🚗",HLT:"💊",EMO:"❤️",CLO:"👕",EDU:"📚",VRB:"⚡",ADJ:"🎨",ADV:"💨",SPT:"⚽",SCI:"🔬",ART:"🎭",ENV:"🌿",WRK:"💼",TRV:"✈️",DIG:"📱",WEA:"☀️",FPR:"🍳",LAW:"⚖️",PSY:"🧠",COL:"🔗",PV:"🔀",IDM:"💡"};
+var LF={A1:"مبتدی",A2:"مقدماتی",B1:"متوسط",B2:"فوق متوسط",C1:"پیشرفته",C2:"تسلط کامل",GR:"گرامر",PRV:"ضرب‌المثل",AWL:"دانشگاهی",MED:"پزشکی",BIZ:"تجاری",TECH:"فناوری",HOM:"وسایل خانه",BOD:"اعضای بدن",FOD:"غذا و نوشیدنی",NAT:"طبیعت",TRN:"حمل‌ونقل",HLT:"سلامت",EMO:"احساسات",CLO:"پوشاک",EDU:"تحصیل",VRB:"افعال",ADJ:"صفت‌ها",ADV:"قیدها",SPT:"ورزش",SCI:"علوم",ART:"هنر و فرهنگ",ENV:"محیط زیست",WRK:"کار و شغل",TRV:"سفر",DIG:"دیجیتال",WEA:"آب‌وهوا",FPR:"آشپزی",LAW:"حقوق",PSY:"روانشناسی",COL:"کالوکیشن",PV:"افعال ترکیبی",IDM:"اصطلاح"};
+var LEVELS=["A1","A2","B1","B2","C1","C2"];
+var SPECIALS=["PHR","GR","PRV","AWL","MED","BIZ","TECH","HOM","BOD","FOD","NAT","TRN","HLT","EMO","CLO","EDU","SPT","SCI","ART","ENV","WRK","TRV","DIG","WEA","FPR","LAW","PSY","COL","PV","IDM"];var GRAMCATS=["VRB","ADJ","ADV"];
+var XPM=[0,5,15,30];
+var DAYS=["ش","ی","د","س","چ","پ","ج"];
+var QUOTES=[
+  "🌟 <b>هر روز یک قدم</b> — یادگیری زبان یک ماراتن است، نه دوی سرعت. تداوم کلید موفقیت است.",
+  "🚀 <b>۱۵ دقیقه در روز</b> کافیست تا در یک سال بیش از ۵۰۰۰ کارت یاد بگیری.",
+  "🧠 <b>علم ثابت کرده</b> که تکرار فاصله‌دار (SRS) سریع‌ترین روش یادگیری کارت است.",
+  "💪 <b>هر کارتی که یاد می‌گیری</b> درهای جدیدی از فرصت‌های شغلی و علمی باز می‌شود.",
+  "🌍 <b>زبان انگلیسی</b> زبان ۱.۵ میلیارد نفر است — سرمایه‌گذاری در آن همیشه ارزشمند است.",
+  "✨ <b>مغز انسان</b> در حین خواب کارت‌ها جدید را تثبیت می‌کند — شب مطالعه کن، صبح بهتر به یاد خواهی داشت.",
+  "🎯 <b>فقط صادقانه ارزیابی کن</b> — هوش مصنوعی این اپ بهترین زمان مرور را برایت تعیین می‌کند.",
+  "⚡ <b>FlashCards 4U</b> از الگوریتم SM-2 استفاده می‌کند — همان روشی که Anki از آن بهره می‌برد.",
+  "🏆 <b>زبان‌آموزان موفق</b> یک ویژگی مشترک دارند: هر روز، حتی ۵ دقیقه، مطالعه می‌کنند.",
+  "💡 <b>تحقیقات نشان می‌دهد</b> یادگیری کارت در قالب مثال و جمله، ماندگاری آن را ۴ برابر افزایش می‌دهد.",
+  "📖 <b>Nelson Mandela</b> گفت: اگر با زبانی که می‌فهمد با کسی صحبت کنی، به ذهنش می‌رسد. اگر به زبان خودش صحبت کنی، به قلبش.",
+  "🔥 <b>هر اشتباهی که می‌کنی</b> یعنی داری یاد می‌گیری — مغز از خطا بهتر یاد می‌گیرد تا از تکرار صحیح.",
+  "🌈 <b>دو زبانه بودن</b> مغز را از آلزایمر محافظت می‌کند و توانایی تمرکز را تا ۲ برابر افزایش می‌دهد.",
+  "⏰ <b>بهترین وقت برای یادگیری</b> الان است. دومین بهترین وقت هم الان است — فقط شروع کن!",
+  "💎 <b>Warren Buffett</b> می‌گوید: سرمایه‌گذاری روی خودت بهترین سرمایه‌گذاری است — زبان بیاموز.",
+  "🎵 <b>موسیقی به زبان</b> خودت گوش بده — مغز کارت‌ها را از طریق موسیقی ۵ برابر سریع‌تر حفظ می‌کند.",
+  "🏃 <b>کسی که با اشتیاق یاد می‌گیرد</b> هرگز احساس خستگی نمی‌کند — یادگیری را به عادت تبدیل کن.",
+  "🌙 <b>قبل از خواب</b> ۱۰ کارت مرور کن — مغز در خواب آن‌ها را در حافظه بلندمدت ذخیره می‌کند.",
+  "🎯 <b>تفاوت بین کسی که می‌داند</b> و کسی که نمی‌داند فقط در تکرار است — هر روز تکرار کن.",
+  "🚀 <b>زبان انگلیسی</b> در دنیای دیجیتال زبان شماره یک است — هر کارت یاد گرفته یک قدم به جلو است.",
+];
+var BADGES=[
+  {id:"b1",ico:"🎯",lbl:"اولین قدم",ok:function(g,p){return g.totalXP>=1;}},
+  {id:"b2",ico:"🔥",lbl:"۳ روز",ok:function(g,p){return g.streak>=3;}},
+  {id:"b3",ico:"⚡",lbl:"یک هفته",ok:function(g,p){return g.streak>=7;}},
+  {id:"b4",ico:"🌟",lbl:"یک ماه",ok:function(g,p){return g.streak>=30;}},
+  {id:"b5",ico:"📚",lbl:"۵۰ کارت",ok:function(g,p){return Object.values(p).filter(function(x){return x.reviews>0;}).length>=50;}},
+  {id:"b6",ico:"📖",lbl:"۱۰۰ کارت",ok:function(g,p){return Object.values(p).filter(function(x){return x.reviews>0;}).length>=100;}},
+  {id:"b7",ico:"🎓",lbl:"۵۰۰ کارت",ok:function(g,p){return Object.values(p).filter(function(x){return x.reviews>0;}).length>=500;}},
+  {id:"b8",ico:"🏆",lbl:"۱۰ تسلط",ok:function(g,p){return Object.values(p).filter(function(x){return (x.mastery||0)>=70;}).length>=10;}},
+  {id:"b9",ico:"💎",lbl:"۵۰ تسلط",ok:function(g,p){return Object.values(p).filter(function(x){return (x.mastery||0)>=70;}).length>=50;}},
+  {id:"b10",ico:"⭐",lbl:"۵۰۰ XP",ok:function(g,p){return g.totalXP>=500;}},
+  {id:"b11",ico:"👑",lbl:"۱۰۰۰ XP",ok:function(g,p){return g.totalXP>=1000;}},
+];
+var AVS=["🧑","👩","🧒","👦","🧔","👴","🦸","🧙"];
+
+// STATE
+var users={},uid=null,sq=[],cur=null,flipped=false;
+var wf="all",voices=[],sRev=0,sMas=0,sXP=0;
+var cfg={dailyNew:20,autoSpeak:"front",speakRate:"normal",accent:"us",examMode:false,showSyn:true,order:"due",fontSize:1};
+var isLight=false;
+var selAv="🧑";
+// Quiz state
+var qLevel="ALL",qTotal=10,qWords=[],qIdx=0,qScore=0,qCorrect=0,qWrong=0,qDone=false;
+
+function gu(){return users[uid];}
+function gp(){return (gu()&&gu().progress)||{};}
+function gg(){return (gu()&&gu().game)||{};}
+
+// TOAST
+function toast(msg,dur){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.style.display="block";
+  setTimeout(function(){t.classList.add("show");},10);
+  clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show");setTimeout(function(){t.style.display="none";},220);},dur||2200);
+}
+
+// SAVE
+function save(){
+  try{localStorage.setItem("fc4u_u",JSON.stringify(users));}catch(e){}
+  try{localStorage.setItem("fc4u_cfg",JSON.stringify(cfg));}catch(e){}
+  try{localStorage.setItem("fc4u_thm",isLight?"light":"dark");}catch(e){}
+  if(uid)localStorage.setItem("fc4u_uid",uid);
+}
+
+// SHOW SCREEN
+function showScr(id){
+  var all=document.querySelectorAll(".scr");
+  for(var i=0;i<all.length;i++)all[i].classList.remove("on");
+  var el=document.getElementById(id);
+  if(el){el.classList.add("on");el.scrollTop=0;}
+}
+
+// GOTO TAB
+function gotoTab(id){
+  showScr(id);
+  // Remove active from all nav buttons
+  document.querySelectorAll("#bnav .bnt").forEach(function(b){b.classList.remove("on");});
+  var btn=document.getElementById("btn_"+id);
+  if(btn)btn.classList.add("on");
+  // Update indicator
+  updateNind(id);
+  if(id==="stats")renderStats();
+  if(id==="words")renderWL();
+  if(id==="profile")renderProfile();
+  if(id==="lvls")updateLvlCounts();
+  if(id==="welcome")updateWelcome();
+  if(id==="quiz")showQuizSetup();
+  if(id==="login"){renderLogin();document.getElementById("bnav").style.display="none";}
+  else if(uid)document.getElementById("bnav").style.display="flex";
+    document.getElementById("bnav").style.direction="ltr";
+}
+
+function updateNind(id){
+  requestAnimationFrame(function(){
+    var btns=Array.from(document.querySelectorAll("#bnav .bnt"));
+    if(!btns.length)return;
+    var ind=document.getElementById("nind");
+    var nb=document.getElementById("bnav");
+    var nbRect=nb.getBoundingClientRect();
+    var activeBtn=document.getElementById("btn_"+id);
+    if(!activeBtn)activeBtn=btns[0];
+    var idx=btns.indexOf(activeBtn);
+    if(idx<0)idx=0;
+    var w=nbRect.width/btns.length;
+    ind.style.width=w+"px";
+    ind.style.left=(idx*w)+"px";
+  });
+}
+
+// BUILD AVATARS
+function buildAvatars(){
+  var row=document.getElementById("avr");row.innerHTML="";
+  AVS.forEach(function(a,i){
+    var btn=document.createElement("button");
+    btn.className="av-btn"+(i===0?" sel":"");
+    btn.textContent=a;
+    btn.addEventListener("click",function(){
+      selAv=a;
+      document.querySelectorAll(".av-btn").forEach(function(b){b.classList.remove("sel");});
+      btn.classList.add("sel");
+    });
+    row.appendChild(btn);
+  });
+}
+
+// BUILD FILTERS
+function buildFilters(){
+  var row=document.getElementById("frow");row.innerHTML="";
+  var filters=[
+    {f:"all",lbl:"همه",col:""},
+    {f:"A1",lbl:"A1",col:"var(--A1)"},{f:"A2",lbl:"A2",col:"var(--A2)"},
+    {f:"B1",lbl:"B1",col:"var(--B1)"},{f:"B2",lbl:"B2",col:"var(--B2)"},
+    {f:"C1",lbl:"C1",col:"var(--C1)"},{f:"C2",lbl:"C2",col:"var(--C2)"},
+    {f:"VRB",lbl:"⚡افعال",col:"var(--VRB)"},
+    {f:"ADJ",lbl:"🎨صفت",col:"var(--ADJ)"},
+    {f:"ADV",lbl:"💨قید",col:"var(--ADV)"},
+    {f:"idiom",lbl:"اصطلاح",col:"var(--pu)"},
+    {f:"GR",lbl:"📝گرامر",col:"var(--GR)"},
+    {f:"PRV",lbl:"💬ضرب‌المثل",col:"var(--PRV)"},
+    {f:"AWL",lbl:"🎓دانشگاهی",col:"var(--AWL)"},
+    {f:"MED",lbl:"🏥پزشکی",col:"var(--MED)"},
+    {f:"BIZ",lbl:"💼تجاری",col:"var(--BIZ)"},
+    {f:"TECH",lbl:"💻فناوری",col:"var(--TECH)"},
+    {f:"HOM",lbl:"🏠خانه",col:"var(--HOM)"},
+    {f:"BOD",lbl:"🫀بدن",col:"var(--BOD)"},
+    {f:"FOD",lbl:"🍎غذا",col:"var(--FOD)"},
+    {f:"NAT",lbl:"🌍طبیعت",col:"var(--NAT)"},
+    {f:"TRN",lbl:"🚗حمل‌ونقل",col:"var(--TRN)"},
+    {f:"HLT",lbl:"💊سلامت",col:"var(--HLT)"},
+    {f:"EMO",lbl:"❤️احساس",col:"var(--EMO)"},
+    {f:"CLO",lbl:"👕پوشاک",col:"var(--CLO)"},
+    {f:"EDU",lbl:"📚تحصیل",col:"var(--EDU)"},
+    {f:"SPT",lbl:"⚽ورزش",col:"var(--SPT)"},
+    {f:"SCI",lbl:"🔬علوم",col:"var(--SCI)"},
+    {f:"ART",lbl:"🎭هنر",col:"var(--ART)"},
+    {f:"ENV",lbl:"🌿محیط",col:"var(--ENV)"},
+    {f:"WRK",lbl:"💼شغل",col:"var(--WRK)"},
+    {f:"TRV",lbl:"✈️سفر",col:"var(--TRV)"},
+    {f:"DIG",lbl:"📱دیجیتال",col:"var(--DIG)"},
+    {f:"WEA",lbl:"☀️آب‌وهوا",col:"var(--WEA)"},
+    {f:"FPR",lbl:"🍳آشپزی",col:"var(--FPR)"},
+    {f:"LAW",lbl:"⚖️حقوق",col:"var(--LAW)"},
+    {f:"PSY",lbl:"🧠روانشناسی",col:"var(--PSY)"},
+    {f:"COL",lbl:"🔗کالوکیشن",col:"var(--COL)"},
+    {f:"PV",lbl:"🔀افعال ترکیبی",col:"var(--PV)"},
+    {f:"IDM",lbl:"💡اصطلاح",col:"var(--IDM)"},
+    {f:"PHR",lbl:"💬جملات روزمره",col:"var(--PHR)"},
+  ];
+  filters.forEach(function(fi){
+    var btn=document.createElement("button");
+    btn.className="fchip"+(fi.f==="all"?" on":"");
+    btn.textContent=fi.lbl;
+    if(fi.col){btn.style.color=fi.col;btn.style.borderColor=fi.col;}
+    btn.addEventListener("click",function(){
+      wf=fi.f;
+      document.querySelectorAll(".fchip").forEach(function(b){b.classList.remove("on");});
+      btn.classList.add("on");renderWL();
+    });
+    row.appendChild(btn);
+  });
+}
+
+// BUILD FONT SIZE BUTTONS
+function buildFSBtns(){
+  var row=document.getElementById("fsrow");row.innerHTML="";
+  [{v:0.85,lbl:"A-"},{v:1,lbl:"A"},{v:1.15,lbl:"A+"},{v:1.3,lbl:"A++"}].forEach(function(s){
+    var btn=document.createElement("button");
+    btn.className="fsbtn"+(s.v===cfg.fontSize?" on":"");
+    btn.textContent=s.lbl;
+    btn.addEventListener("click",function(){
+      cfg.fontSize=s.v;
+      document.documentElement.style.fontSize=(s.v*16)+"px";
+      document.querySelectorAll(".fsbtn").forEach(function(b){b.classList.remove("on");});
+      btn.classList.add("on");save();toast("اندازه فونت تغییر کرد ✓");
+    });
+    row.appendChild(btn);
+  });
+}
+
+// BUILD SEGMENTS
+function buildSegs(){
+  [["seg-order","order"],["seg-speak","autoSpeak"],["seg-rate","speakRate"],["seg-accent","accent"],["qlvl-seg","__qlvl"],["qnum-seg","__qnum"]].forEach(function(pair){
+    var seg=document.getElementById(pair[0]);if(!seg)return;
+    var btns=seg.querySelectorAll(".sgo");
+    btns.forEach(function(btn){
+      btn.addEventListener("click",function(){
+        var v=btn.getAttribute("data-v");
+        if(pair[1]==="__qlvl")qLevel=v;
+        else if(pair[1]==="__qnum")qTotal=parseInt(v);
+        else cfg[pair[1]]=v;
+        btns.forEach(function(b){b.classList.remove("on");});
+        btn.classList.add("on");
+        if(pair[1]!=="__qlvl"&&pair[1]!=="__qnum")save();
+      });
+    });
+  });
+}
+
+// BUILD LEVEL BUTTONS
+function buildLvlBtns(){
+  var allLvls=["ALL"].concat(LEVELS).concat(SPECIALS).concat(GRAMCATS);
+  allLvls.forEach(function(lv){
+    var el=document.getElementById("lv_"+lv);
+    if(el)el.addEventListener("click",function(){selectLevel(lv);});
+    var qb=document.getElementById("qbtn_"+lv);
+    if(qb)qb.addEventListener("click",function(e){e.stopPropagation();startQuizFor(lv);});
+  });
+}
+
+// INIT
+function init(){
+  try{users=JSON.parse(localStorage.getItem("fc4u_u")||"{}");}catch(e){users={};}
+  try{var s=JSON.parse(localStorage.getItem("fc4u_cfg")||"{}");cfg=Object.assign({},cfg,s);}catch(e){}
+  try{isLight=localStorage.getItem("fc4u_thm")==="light";if(isLight)document.body.classList.add("light");}catch(e){}
+  uid=localStorage.getItem("fc4u_uid")||null;
+  document.documentElement.style.fontSize=(cfg.fontSize||1)*16+"px";
+  applyThemeBtn();
+  buildAvatars();buildFilters();buildFSBtns();buildSegs();buildLvlBtns();
+  setupTTS();
+
+  // All event listeners
+  document.getElementById("login-btn").addEventListener("click",createUser);
+  document.getElementById("uinp").addEventListener("keydown",function(e){if(e.key==="Enter")createUser();});
+  document.getElementById("start-btn").addEventListener("click",function(){buildQ();gotoTab("study");});
+  document.getElementById("showbtn").addEventListener("click",flipCard);
+  document.getElementById("card").addEventListener("click",flipCard);
+  document.getElementById("fabtn").addEventListener("click",function(e){e.stopPropagation();speak();});
+  document.getElementById("abbtn").addEventListener("click",function(e){e.stopPropagation();speak();});
+  document.getElementById("r0").addEventListener("click",function(){rate(0);});
+  document.getElementById("r1").addEventListener("click",function(){rate(1);});
+  document.getElementById("r2").addEventListener("click",function(){rate(2);});
+  document.getElementById("r3").addEventListener("click",function(){rate(3);});
+  document.getElementById("more-btn").addEventListener("click",forceMore);
+  document.getElementById("lvlbtn").addEventListener("click",function(){gotoTab("lvls");});
+    var sqb=document.getElementById("settings-quick-btn");
+  if(sqb)sqb.addEventListener("click",function(){gotoTab("settings");});
+  document.getElementById("thmbtn").addEventListener("click",toggleTheme);
+  document.getElementById("btn_welcome").addEventListener("click",function(){gotoTab("welcome");});
+  document.getElementById("btn_study").addEventListener("click",function(){gotoTab("study");});
+  document.getElementById("btn_quiz").addEventListener("click",function(){gotoTab("quiz");});
+  document.getElementById("btn_stats").addEventListener("click",function(){gotoTab("stats");});
+  var bw=document.getElementById("btn_words");
+  if(bw)bw.addEventListener("click",function(){gotoTab("words");});
+  document.getElementById("add-user-btn").addEventListener("click",function(){gotoTab("login");});
+  document.getElementById("reset-btn").addEventListener("click",resetUser);
+  document.getElementById("dn-m").addEventListener("click",function(){cfg.dailyNew=Math.max(5,(cfg.dailyNew||20)-5);document.getElementById("dn-val").textContent=cfg.dailyNew;save();});
+  document.getElementById("dn-p").addEventListener("click",function(){cfg.dailyNew=Math.min(50,(cfg.dailyNew||20)+5);document.getElementById("dn-val").textContent=cfg.dailyNew;save();});
+  document.getElementById("tog-exam").addEventListener("click",function(){togCfg("examMode",this);});
+  document.getElementById("tog-syn").addEventListener("click",function(){togCfg("showSyn",this);});
+  document.getElementById("tog-thm").addEventListener("click",toggleTheme);
+  document.getElementById("wsrch").addEventListener("input",renderWL);
+  // Dashboard quick buttons
+  var db=document.getElementById("dash-lvl-btn");if(db)db.addEventListener("click",function(){gotoTab("lvls");});
+  var dq=document.getElementById("dash-quiz-btn");if(dq)dq.addEventListener("click",function(){gotoTab("quiz");});
+  var dw=document.getElementById("dash-words-btn");if(dw)dw.addEventListener("click",function(){gotoTab("words");});
+  var ds=document.getElementById("dash-stats-btn");if(ds)ds.addEventListener("click",function(){gotoTab("stats");});
+  var dsg=document.getElementById("dash-settings-btn");if(dsg)dsg.addEventListener("click",function(){gotoTab("settings");});
+  // Welcome user bar buttons
+  var wlSwitch=document.getElementById("wl-switch-btn");
+  if(wlSwitch)wlSwitch.addEventListener("click",function(){gotoTab("login");});
+  var wlLvl=document.getElementById("wl-lvl-btn");
+  if(wlLvl)wlLvl.addEventListener("click",function(){gotoTab("lvls");});
+  // Quiz buttons
+  document.getElementById("start-quiz-btn").addEventListener("click",function(){startQuizFor(qLevel);});
+  document.getElementById("qspk").addEventListener("click",function(){if(qWords[qIdx])speakW(qWords[qIdx].word);});
+  document.getElementById("qnext").addEventListener("click",function(){qIdx++;showQ();});
+  document.getElementById("qr-retry").addEventListener("click",showQuizSetup);
+  document.getElementById("qr-study").addEventListener("click",function(){gotoTab("study");});
+
+  applySegsUI();
+
+  if(uid&&users[uid])afterLogin();
+  else{renderLogin();showScr("login");}
+}
+
+// THEME
+function toggleTheme(){
+  isLight=!isLight;document.body.classList.toggle("light",isLight);
+  localStorage.setItem("fc4u_thm",isLight?"light":"dark");applyThemeBtn();
+}
+function applyThemeBtn(){
+  document.getElementById("thmbtn").textContent=isLight?"☀️":"🌙";
+  var t=document.getElementById("tog-thm");
+  if(t){t.classList.toggle("on",isLight);t.classList.toggle("off",!isLight);}
+}
+
+// TOGGLE
+function togCfg(k,btn){cfg[k]=!cfg[k];btn.classList.toggle("on",cfg[k]);btn.classList.toggle("off",!cfg[k]);save();}
+
+function applySegsUI(){
+  var m={
+    "seg-order":cfg.order,"seg-speak":cfg.autoSpeak,
+    "seg-rate":cfg.speakRate,"seg-accent":cfg.accent
+  };
+  Object.keys(m).forEach(function(id){
+    var seg=document.getElementById(id);if(!seg)return;
+    seg.querySelectorAll(".sgo").forEach(function(b){
+      b.classList.toggle("on",b.getAttribute("data-v")===m[id]);
+    });
+  });
+  var dn=document.getElementById("dn-val");if(dn)dn.textContent=cfg.dailyNew;
+  ["tog-exam","tog-syn"].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;
+    var k=id==="tog-exam"?"examMode":"showSyn";
+    el.classList.toggle("on",cfg[k]);el.classList.toggle("off",!cfg[k]);
+  });
+}
+
+// USERS
+function renderLogin(){
+  var ul=document.getElementById("ul"),sec=document.getElementById("ulsec");
+  var keys=Object.keys(users);
+  if(!keys.length){sec.style.display="none";return;}
+  sec.style.display="block";ul.innerHTML="";
+  keys.forEach(function(k){
+    var u=users[k];
+    var rev=Object.values(u.progress||{}).filter(function(x){return x.reviews>0;}).length;
+    var d=document.createElement("div");d.className="ui";
+    var av=document.createElement("div");av.className="uav";av.textContent=u.avatar;
+    var nm=document.createElement("div");nm.className="unm";nm.textContent=u.name;
+    var inf=document.createElement("div");inf.className="uinf";inf.textContent=rev+" کارت · "+(u.game&&u.game.streak||0)+"🔥";
+    var del=document.createElement("button");del.className="udel-btn";del.textContent="✕";
+    del.addEventListener("click",function(e){e.stopPropagation();delU(k);});
+    d.appendChild(av);d.appendChild(nm);d.appendChild(inf);d.appendChild(del);
+    d.addEventListener("click",function(){loginAs(k);});
+    ul.appendChild(d);
+  });
+}
+function createUser(){
+  var name=(document.getElementById("uinp").value||"").replace(/^\s+|\s+$/g,"");
+  if(!name){toast("نامت رو وارد کن! ✍️");return;}
+  var k="u"+Date.now();
+  users[k]={name:name,avatar:selAv,level:"A1",progress:{},game:{streak:0,lastStudy:"",totalXP:0,history:{}},joinDate:new Date().toLocaleDateString("fa-IR")};
+  loginAs(k);
+}
+function loginAs(k){uid=k;save();afterLogin();}
+function delU(k){
+  if(!confirm("حذف "+users[k].name+"?"))return;
+  delete users[k];save();renderLogin();
+  if(uid===k){uid=null;localStorage.removeItem("fc4u_uid");}
+}
+function afterLogin(){
+  if(!uid||!users[uid]){renderLogin();showScr("login");document.getElementById("bnav").style.display="none";return;}
+  updateStreak();updateNav();updateLvlCounts();updateWelcome();
+  // After login → show level picker first (first time), else welcome
+  var u=gu();
+  if(!u.levelSet){
+    showScr("lvls");document.getElementById("bnav").style.display="flex";
+    toast("سطح خود را انتخاب کنید 👇");
+  } else {
+    showScr("welcome");document.getElementById("bnav").style.display="flex";
+  }
+  document.querySelectorAll("#bnav .bnt").forEach(function(b){b.classList.remove("on");});
+  var wb=document.getElementById("btn_welcome");if(wb)wb.classList.add("on");
+  setTimeout(function(){updateNind("welcome");},100);
+}
+
+// STREAK
+function updateStreak(){
+  var u=gu();if(!u)return;var g=u.game;
+  var today=new Date().toDateString();
+  if(g.lastStudy!==today){
+    var yest=new Date(Date.now()-86400000).toDateString();
+    g.streak=(g.lastStudy===yest)?(g.streak||0)+1:1;g.lastStudy=today;
+  }
+  save();updateNav();
+}
+function updateNav(){
+  var g=gg();
+  [["snav",g.streak||0],["xnav",g.totalXP||0],["str-big",g.streak||0]].forEach(function(p){var e=document.getElementById(p[0]);if(e)e.textContent=p[1];});
+  var xb=document.getElementById("xp-big");if(xb)xb.textContent=(g.totalXP||0)+"⭐";
+}
+
+// LEVELS
+function updateLvlCounts(){
+  var prog=gp();
+  var allLvls=["ALL"].concat(LEVELS).concat(SPECIALS).concat(GRAMCATS);
+  allLvls.forEach(function(lv){
+    var words=lv==="ALL"?VOCAB:VOCAB.filter(function(w){return w.level===lv;});
+    var el=document.getElementById("cnt_"+lv);if(!el)return;
+    var m=words.filter(function(w){return (prog[w.id]&&prog[w.id].mastery||0)>=70;}).length;
+    el.innerHTML=words.length+" کارت<br><span style='color:"+(LC[lv]||"var(--gr)")+"'>"+Math.round(words.length?m/words.length*100:0)+"٪</span>";
+  });
+  updateLvlBtn();
+}
+function updateLvlBtn(){
+  var u=gu();var lv=(u&&u.level)||"A1";var b=document.getElementById("lvlbtn");if(!b)return;
+  var col=LC[lv]||"#4d9fff";
+  b.textContent=(lv==="ALL"?"همه":lv)+" ▾";b.style.color=col;b.style.borderColor=col;
+}
+function selectLevel(lv){
+  if(!gu())return;
+  gu().level=lv;gu().levelSet=true;save();
+  updateLvlBtn();updateLvlCounts();
+  buildQ();gotoTab("study");
+  toast("سطح "+(lv==="ALL"?"همه":(LF[lv]||lv))+" انتخاب شد ✓");
+}
+
+// WELCOME
+function updateWelcome(){
+  var u=gu();if(!u)return;
+  var g=u.game||{},prog=u.progress||{};
+  document.getElementById("wav").textContent=u.avatar;
+  var h=new Date().getHours();
+  var gr=h<12?"صبح بخیر ☀️":h<18?"عصر بخیر 🌤️":"شب بخیر 🌙";
+  document.getElementById("wnm").textContent=gr+" "+u.name;
+  var lv=u.level||"A1";
+  document.getElementById("wlv").textContent="سطح "+lv+" · "+(LF[lv]||"همه");
+  document.getElementById("wstr").textContent=(g.streak||0)+"🔥";
+  document.getElementById("wxp").textContent=(g.totalXP||0)+"⭐";
+  var total=VOCAB.length,mastered=Object.values(prog).filter(function(x){return (x.mastery||0)>=70;}).length;
+  document.getElementById("wmas").textContent=Math.round(mastered/total*100)+"%";
+  var due=VOCAB.filter(function(w){var p=prog[w.id];return p&&p.reviews>0&&p.nextReview<=Date.now()&&(p.mastery||0)<70;}).length;
+  var newC=VOCAB.filter(function(w){return !prog[w.id]||!prog[w.id].reviews;}).length;
+  document.getElementById("wgreet").innerHTML=gr+" <b>"+u.name+"</b>! 👋<br>امروز: <b style='color:var(--gd)'>"+due+"</b> مرور + <b style='color:var(--ac2)'>"+Math.min(newC,cfg.dailyNew)+"</b> جدید";
+  var bgsEl=document.getElementById("wbgs");
+  if(bgsEl){
+    var earned=BADGES.filter(function(b){try{return b.ok(g,prog);}catch(e){return false;}});
+    bgsEl.innerHTML=earned.slice(-4).map(function(b){return "<span class='wbg'>"+b.ico+" "+b.lbl+"</span>";}).join("");
+  }
+  // Update user bar
+  var ub=document.getElementById("wl-user-bar");
+  if(ub){
+    ub.style.display="block";
+    var uav=document.getElementById("wl-uav");if(uav)uav.textContent=u.avatar;
+    var unm=document.getElementById("wl-uname");if(unm)unm.textContent=u.name;
+    var ulv=document.getElementById("wl-ulv");if(ulv)ulv.textContent="سطح "+lv+" · "+(LF[lv]||"همه");
+    var lvb=document.getElementById("wl-lvl-btn");
+    if(lvb){
+      var col=LC[lv]||"#4d9fff";
+      lvb.style.color=col;lvb.style.borderColor=col;
+      lvb.textContent=(LE[lv]||"")+" "+lv+" ↓";
+    }
+  }
+  // Random quote - changes every visit
+  var qEl=document.getElementById("motiv-text");
+  if(qEl)qEl.innerHTML=QUOTES[Math.floor(Math.random()*QUOTES.length)];
+}
+
+// SRS
+function gpw(id){
+  var p=gu()&&gu().progress;if(!p)return{interval:0,ef:2.5,nextReview:0,mastery:0,reviews:0};
+  if(!p[id])p[id]={interval:0,ef:2.5,nextReview:0,mastery:0,reviews:0};return p[id];
+}
+function rate(q){
+  if(!cur||!gu())return;
+  var p=gpw(cur.id);var wasNM=(p.mastery||0)<70;p.reviews++;
+  if(q===0){p.interval=1;p.mastery=Math.max(0,(p.mastery||0)-20);}
+  else{
+    p.interval=p.interval<1?[0,1,4,6][q]:p.interval<2?[0,3,6,8][q]:Math.round(p.interval*(p.ef||2.5));
+    p.ef=Math.max(1.3,(p.ef||2.5)+0.1-(3-q)*(0.08+(3-q)*0.02));
+    p.mastery=Math.min(100,(p.mastery||0)+[0,5,15,25][q]);
+  }
+  p.nextReview=Date.now()+p.interval*86400000;
+  var xg=XPM[q];gu().game.totalXP=(gu().game.totalXP||0)+xg;sXP+=xg;sRev++;
+  if(wasNM&&(p.mastery||0)>=70){sMas++;if(Math.random()<.6)doConfetti();}
+  var today=new Date().toDateString();
+  if(!gu().game.history)gu().game.history={};
+  gu().game.history[today]=(gu().game.history[today]||0)+1;
+  updateStreak();save();showXP(xg,q);animNext();
+}
+function showXP(xp,q){
+  if(!xp)return;var el=document.createElement("div");el.className="xpp";
+  var cols=["","#ff8c00","#00d084","#ffd700"];
+  el.style.cssText="color:"+(cols[q]||"#ffd700")+";left:"+(Math.random()*60+20)+"%;top:"+(Math.random()*30+30)+"%";
+  el.textContent="+"+xp+" XP";document.body.appendChild(el);setTimeout(function(){el.remove();},850);
+}
+function doConfetti(){
+  var cols=["#4d9fff","#b87fff","#00d084","#ff8c00","#ff3b5c","#ffd700"];
+  for(var i=0;i<18;i++)(function(i){setTimeout(function(){
+    var el=document.createElement("div");el.className="conf";
+    el.style.cssText="left:"+Math.random()*100+"%;top:0;background:"+cols[Math.floor(Math.random()*cols.length)]+";animation-delay:"+Math.random()*.5+"s;transform:rotate("+Math.random()*360+"deg)";
+    document.body.appendChild(el);setTimeout(function(){el.remove();},2000);
+  },i*50);})(i);
+}
+
+// QUEUE
+function getWords(){var u=gu();var lv=(u&&u.level)||"A1";return lv==="ALL"?VOCAB:VOCAB.filter(function(w){return w.level===lv;});}
+function buildQ(){
+  var words=getWords(),now=Date.now(),prog=gp();
+  var due=words.filter(function(w){var p=prog[w.id];return p&&p.reviews>0&&p.nextReview<=now&&(p.mastery||0)<70;});
+  var newW=words.filter(function(w){return !prog[w.id]||prog[w.id].reviews===0;});
+  function shuf(a){return a.slice().sort(function(){return Math.random()-.5;});}
+  if(cfg.order==="mastery")due.sort(function(a,b){return (prog[a.id]&&prog[a.id].mastery||0)-(prog[b.id]&&prog[b.id].mastery||0);});
+  if(cfg.order==="random")due=shuf(due);
+  sq=due.concat(shuf(newW).slice(0,Math.max(0,cfg.dailyNew-due.length)));
+  sRev=0;sMas=0;sXP=0;showNext();
+}
+function forceMore(){var words=getWords(),prog=gp();sq=words.filter(function(w){return (prog[w.id]&&prog[w.id].mastery||0)<70;}).sort(function(){return Math.random()-.5;}).slice(0,20);showNext();}
+function showNext(){
+  var fc=document.getElementById("fc"),nw=document.getElementById("nowords");
+  var sb=document.getElementById("showbtn"),rr=document.getElementById("rrow");
+  if(!sq.length){
+    fc.style.display="none";nw.style.display="flex";sb.style.display="none";rr.style.display="none";
+    document.getElementById("dn-rev").textContent=sRev;
+    document.getElementById("dn-mas").textContent=sMas;
+    document.getElementById("dn-xp").textContent=sXP;return;
+  }
+  fc.style.display="block";nw.style.display="none";sb.style.display="block";rr.style.display="none";
+  cur=sq[0];flipped=false;document.getElementById("card").classList.remove("flipped");
+  renderCard();
+  var tot=sq.length+sRev;
+  document.getElementById("spf").style.width=(tot>0?Math.round(sRev/tot*100):0)+"%";
+  document.getElementById("qcnt").textContent=sq.length+" کارت";
+  setTimeout(speak,350);
+}
+function renderCard(){
+  if(!cur)return;
+  var w=cur,lv=w.level,col=LC[lv]||"#4d9fff";
+  var p=gpw(w.id),m=p.mastery||0;
+  document.getElementById("frib").style.background="linear-gradient(90deg,"+col+","+col+"66)";
+  document.getElementById("brib").style.background="linear-gradient(90deg,"+col+","+col+"66)";
+  var bd=document.getElementById("wlvl");bd.textContent=(LE[lv]||"")+" "+lv;bd.style.color=col;bd.style.borderColor=col;bd.style.background=col+"18";
+  document.getElementById("wpos").textContent=w.pos;
+  document.getElementById("wmain").textContent=w.word;
+  document.getElementById("wpron").textContent=w.ipa;
+  var wt=document.getElementById("wtype");
+  var sp=["idiom","collocation","phrasal verb","proverb","grammar"];
+  if(sp.indexOf(w.pos)>=0){wt.style.display="inline-block";wt.textContent=w.pos;}else wt.style.display="none";
+  var ring=document.getElementById("mring");ring.style.strokeDashoffset=125.7*(1-m/100);ring.style.stroke=col;
+  document.getElementById("mpct").textContent=m+"%";
+  document.getElementById("bwt").textContent=w.word;document.getElementById("bpr").textContent=w.ipa;
+  document.getElementById("fat").textContent=w.fa;document.getElementById("ent").textContent=w.def;
+  // Example sentences with speaker buttons
+  ["ex1","ex2"].forEach(function(id,i){
+    var el=document.getElementById(id);el.innerHTML="";
+    var txt=i===0?w.ex1:w.ex2;if(!txt)return;
+    el.style.display="flex";el.style.alignItems="flex-start";el.style.gap="6px";
+    var spk=document.createElement("button");spk.className="abtn";
+    spk.style.cssText="padding:2px 7px;font-size:10px;flex-shrink:0";spk.textContent="🔊";
+    (function(t){spk.addEventListener("click",function(e){e.stopPropagation();speakW(t);});})(txt);
+    var span=document.createElement("span");span.className="ex-txt";span.textContent=txt;
+    el.appendChild(spk);el.appendChild(span);
+  });
+  var stags=document.getElementById("stags"),synsec=document.getElementById("synsec");
+  stags.innerHTML="";
+  if((w.syn&&w.syn.trim())||(w.ant&&w.ant.trim())){
+    synsec.style.display="block";
+    if(w.syn)w.syn.split(",").forEach(function(s){var t=document.createElement("span");t.className="syn-t";t.textContent=s.trim();t.addEventListener("click",function(){speakW(s.trim());});stags.appendChild(t);});
+    if(w.ant)w.ant.split(",").forEach(function(s){var t=document.createElement("span");t.className="ant-t";t.textContent=s.trim();stags.appendChild(t);});
+  }else synsec.style.display="none";
+  var wfsec=document.getElementById("wfsec"),wftags=document.getElementById("wftags");
+  var root=w.word.toLowerCase().replace(/ing$|ed$|er$|ly$|ion$|tion$|ness$|ful$|less$/,"");
+  var fam=root.length>3?VOCAB.filter(function(x){return x.id!==w.id&&x.word.toLowerCase()!==w.word.toLowerCase()&&x.word.toLowerCase().indexOf(root)===0;}).slice(0,4):[];
+  if(fam.length){wfsec.style.display="block";wftags.innerHTML="";fam.forEach(function(fw){var t=document.createElement("div");t.className="wf-t";t.textContent=fw.word+" ("+fw.pos+")";t.addEventListener("click",function(){speakW(fw.word);});wftags.appendChild(t);});}
+  else wfsec.style.display="none";
+}
+function flipCard(){
+  if(!cur)return;flipped=!flipped;
+  document.getElementById("card").classList.toggle("flipped",flipped);
+  document.getElementById("showbtn").style.display=flipped?"none":"block";
+  document.getElementById("rrow").style.display=flipped?"flex":"none";
+  // Speak definition on back
+  if(flipped&&cur){
+    setTimeout(function(){
+      if(!window.speechSynthesis)return;
+      speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(cur.def);
+      u.lang="en-US";u.rate=getR();var v=getV();if(v)u.voice=v;
+      speechSynthesis.speak(u);
+    },400);
+  }
+}
+function animNext(){
+  var c=document.getElementById("card");
+  c.style.transition="all .18s";c.style.opacity="0";c.style.transform="translateX(-22px) scale(.96)";
+  setTimeout(function(){c.style.transition="";c.style.opacity="";c.style.transform="";flipped=false;document.getElementById("rrow").style.display="none";sq.shift();showNext();},185);
+}
+
+// TTS
+function setupTTS(){if(!window.speechSynthesis)return;var l=function(){voices=speechSynthesis.getVoices();};l();speechSynthesis.onvoiceschanged=l;}
+function getV(){if(cfg.accent==="uk")return voices.filter(function(v){return v.lang==="en-GB";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;return voices.filter(function(v){return v.lang==="en-US";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0&&v.name.toLowerCase().indexOf("us")>=0;})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;}
+function getR(){return{slow:.7,normal:.85,fast:1.1}[cfg.speakRate]||.85;}
+function speak(){if(cur)speakW(cur.word);}
+function speakW(word){
+  if(!window.speechSynthesis)return;speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(word);u.lang=cfg.accent==="uk"?"en-GB":"en-US";u.rate=getR();
+  var v=getV();if(v)u.voice=v;
+  var btn=document.getElementById("fabtn");if(btn){btn.classList.add("playing");u.onend=function(){btn.classList.remove("playing");};}
+  speechSynthesis.speak(u);
+}
+
+// ===== QUIZ =====
+function showQuizSetup(){
+  document.getElementById("quiz-setup").style.display="block";
+  document.getElementById("quiz-play").style.display="none";
+  document.getElementById("quiz-result").style.display="none";
+}
+function startQuizFor(lv){
+  // Called from level picker quiz buttons OR from quiz tab
+  qLevel=lv;
+  var pool=lv==="ALL"?VOCAB:VOCAB.filter(function(w){return w.level===lv;});
+  qWords=pool.slice().sort(function(){return Math.random()-.5;}).slice(0,Math.min(qTotal,pool.length));
+  qIdx=0;qScore=0;qCorrect=0;qWrong=0;
+  // Navigate to quiz tab
+  showScr("quiz");
+  document.querySelectorAll(".bnt").forEach(function(b){b.classList.remove("on");});
+  document.getElementById("btn_quiz").classList.add("on");
+  updateNind("quiz");
+  document.getElementById("quiz-setup").style.display="none";
+  document.getElementById("quiz-play").style.display="block";
+  document.getElementById("quiz-result").style.display="none";
+  showQ();
+}
+function showQ(){
+  if(qIdx>=qWords.length){showQResult();return;}
+  var w=qWords[qIdx];
+  document.getElementById("qnum").textContent=qIdx+1;
+  document.getElementById("qtot").textContent=qWords.length;
+  document.getElementById("qsc").textContent=qScore;
+  document.getElementById("qprog").style.width=(qIdx/qWords.length*100)+"%";
+  document.getElementById("qword").textContent=w.word;
+  document.getElementById("qipa").textContent=w.ipa;
+  document.getElementById("qfb").style.display="none";
+  document.getElementById("qnext").style.display="none";
+  setTimeout(function(){speakW(w.word);},300);
+  // Build 4 choices
+  var wrong=VOCAB.filter(function(x){return x.id!==w.id&&x.fa!==w.fa;}).sort(function(){return Math.random()-.5;}).slice(0,3);
+  var choices=[w].concat(wrong).sort(function(){return Math.random()-.5;});
+  var container=document.getElementById("qchoices");container.innerHTML="";
+  choices.forEach(function(c){
+    var btn=document.createElement("button");btn.className="q4-choice";
+    btn.textContent=c.fa;
+    (function(isCorrect,b){
+      b.addEventListener("click",function(){
+        if(document.getElementById("qnext").style.display==="block")return;
+        var allBtns=container.querySelectorAll(".q4-choice");
+        allBtns.forEach(function(ab){ab.style.pointerEvents="none";});
+        var fb=document.getElementById("qfb");
+        if(isCorrect){
+          qScore+=10;qCorrect++;b.classList.add("correct");
+          fb.style.cssText="display:block;background:rgba(0,208,132,.1);border:1px solid rgba(0,208,132,.3);color:var(--gr);text-align:center;padding:9px;border-radius:var(--rs);margin-top:7px;font-size:12px;font-weight:700;direction:rtl";
+          fb.textContent="✅ آفرین! درست بود";
+          document.getElementById("qsc").textContent=qScore;
+          showXP(10,3);
+        } else {
+          qWrong++;b.classList.add("wrong");
+          allBtns.forEach(function(ab){if(ab.textContent===w.fa)ab.classList.add("show-c");});
+          fb.style.cssText="display:block;background:rgba(255,59,92,.1);border:1px solid rgba(255,59,92,.3);color:var(--rd);text-align:center;padding:9px;border-radius:var(--rs);margin-top:7px;font-size:12px;font-weight:700;direction:rtl";
+          fb.textContent="❌ جواب: "+w.fa;
+        }
+        document.getElementById("qnext").style.display="block";
+      });
+    })(c.id===w.id,btn);
+    container.appendChild(btn);
+  });
+}
+function showQResult(){
+  document.getElementById("quiz-play").style.display="none";
+  document.getElementById("quiz-result").style.display="block";
+  var pct=Math.round(qCorrect/qWords.length*100);
+  var emoji=pct>=90?"🏆":pct>=70?"🌟":pct>=50?"👍":"💪";
+  var title=pct>=90?"عالی بود!":pct>=70?"خوب بود!":pct>=50?"بد نبود!":"تمرین کن!";
+  document.getElementById("qr-ico").textContent=emoji;
+  document.getElementById("qr-ttl").textContent=title;
+  document.getElementById("qr-sc").textContent=qScore+" امتیاز";
+  var grid=document.getElementById("qr-grid");
+  grid.innerHTML=[
+    {l:"درست",v:qCorrect,c:"var(--gr)"},{l:"اشتباه",v:qWrong,c:"var(--rd)"},{l:"دقت",v:pct+"%",c:"var(--ac2)"}
+  ].map(function(s){return "<div style='background:var(--bg3);border:1px solid var(--bd);border-radius:var(--rs);padding:9px;text-align:center'><div style='font-size:20px;font-weight:900;color:"+s.c+"'>"+s.v+"</div><div style='font-size:9px;color:var(--t3);direction:rtl;margin-top:2px'>"+s.l+"</div></div>";}).join("");
+  if(gu()){gu().game.totalXP=(gu().game.totalXP||0)+qScore;save();updateNav();}
+}
+
+// STATS
+function renderStats(){
+  var prog=gp(),all=VOCAB,total=all.length;
+  var mastered=all.filter(function(w){return (prog[w.id]&&prog[w.id].mastery||0)>=70;}).length;
+  var learning=all.filter(function(w){var p=prog[w.id];return p&&p.reviews>0&&(p.mastery||0)<70;}).length;
+  var newW=all.filter(function(w){return !prog[w.id]||!prog[w.id].reviews;}).length;
+  var canvas=document.getElementById("donut");
+  if(canvas){
+    var ctx=canvas.getContext("2d");
+    ctx.clearRect(0,0,96,96);
+    var data=[mastered,learning,newW];
+    var colors=["#00d084","#ff8c00","#4d9fff"];
+    var start=-Math.PI/2;
+    var hasData=total>0;
+    if(!hasData){
+      // Empty state - grey circle
+      ctx.beginPath();ctx.arc(48,48,42,0,Math.PI*2);ctx.fillStyle="#1e2f48";ctx.fill();
+    } else {
+      data.forEach(function(val,i){
+        var sl=(val/total)*Math.PI*2;
+        if(sl<0.001)sl=0.001;
+        ctx.beginPath();ctx.moveTo(48,48);ctx.arc(48,48,42,start,start+sl);ctx.closePath();
+        ctx.fillStyle=colors[i];ctx.fill();start+=sl;
+      });
+    }
+    // Hole
+    ctx.beginPath();ctx.arc(48,48,28,0,Math.PI*2);
+    ctx.fillStyle=isLight?"#ffffff":"#0b1628";ctx.fill();
+    // Text
+    ctx.fillStyle=isLight?"#0a1628":"#f0f6ff";
+    ctx.font="bold 11px sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(hasData?Math.round(mastered/total*100)+"%":"0%",48,48);
+  }
+  document.getElementById("dl-m").textContent=mastered;document.getElementById("dl-l").textContent=learning;document.getElementById("dl-n").textContent=newW;
+  var history=(gu()&&gu().game&&gu().game.history)||{};
+  var wc=document.getElementById("wchart");
+  if(wc){
+    wc.innerHTML="";
+    wc.style.cssText="display:flex;gap:4px;align-items:flex-end;height:70px;margin-top:8px;width:100%";
+    var vals=[];for(var ii=6;ii>=0;ii--){var dd=new Date(Date.now()-ii*86400000);vals.push(history[dd.toDateString()]||0);}
+    var maxV=Math.max.apply(null,vals.concat([1]));
+    vals.forEach(function(val,vi){
+      var d2=new Date(Date.now()-(6-vi)*86400000);
+      var pct=Math.max(Math.round(val/maxV*100),6);
+      var wrap=document.createElement("div");
+      wrap.style.cssText="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px";
+      var bar=document.createElement("div");
+      bar.style.cssText="width:100%;height:"+pct+"%;min-height:5px;background:"+(vi===6?"linear-gradient(180deg,var(--ac2),var(--ac))":"var(--bd3)")+";border-radius:3px 3px 0 0;transition:height .4s";
+      var cnt=document.createElement("span");cnt.style.cssText="font-size:7px;color:var(--t3);font-weight:700";cnt.textContent=val||"";
+      var lbl=document.createElement("span");lbl.style.cssText="font-size:7px;color:var(--t3)";lbl.textContent=DAYS[d2.getDay()];
+      wrap.appendChild(cnt);wrap.appendChild(bar);wrap.appendChild(lbl);
+      wc.appendChild(wrap);
+    });
+  }
+  var lvrows=document.getElementById("lvrows");
+  if(lvrows){
+    lvrows.innerHTML="";
+    var allLvKeys=LEVELS.concat(SPECIALS).concat(GRAMCATS);
+    allLvKeys.forEach(function(lv){
+      var wds=all.filter(function(w){return w.level===lv;});
+      if(!wds.length)return;
+      var m=wds.filter(function(w){return (prog[w.id]&&prog[w.id].mastery||0)>=70;}).length;
+      var pct=wds.length?Math.round(m/wds.length*100):0;
+      var col=LC[lv]||"#4d9fff";
+      var d=document.createElement("div");d.className="lvrow";
+      d.innerHTML="<span class='lvbdg' style='color:"+col+";border-color:"+col+"'>"+(LE[lv]||"")+" "+lv+"</span>"+
+        "<div class='lvi'>"+(LF[lv]||lv)+"<div class='lvb'><div class='lvbf' style='width:"+pct+"%;background:"+col+"'></div></div></div>"+
+        "<div class='lvp'>"+m+"/"+wds.length+"<br>"+pct+"%</div>";
+      lvrows.appendChild(d);
+    });
+  }
+  var studied=all.filter(function(w){return prog[w.id]&&prog[w.id].reviews>0;});
+  var sorted=studied.slice().sort(function(a,b){return (prog[b.id]&&prog[b.id].mastery||0)-(prog[a.id]&&prog[a.id].mastery||0);});
+  [{el:"best-w",words:sorted.slice(0,5)},{el:"worst-w",words:sorted.slice().reverse().slice(0,5)}].forEach(function(obj){
+    var c=document.getElementById(obj.el);if(!c)return;c.innerHTML="";
+    if(!obj.words.length){c.innerHTML="<div style='font-size:10px;color:var(--t3);text-align:center;padding:9px;direction:rtl'>هنوز مطالعه نشده</div>";return;}
+    obj.words.forEach(function(w){var m=prog[w.id]&&prog[w.id].mastery||0;var col=m>=70?"var(--gr)":m>=40?"var(--or)":"var(--rd)";var d=document.createElement("div");d.className="wrdi";d.innerHTML="<span class='wrdw'>"+w.word+"</span><span class='wrdp' style='color:"+col+";border-color:"+col+"'>"+m+"%</span>";c.appendChild(d);});
+  });
+  document.getElementById("td-time").textContent=Math.round(((gu()&&gu().game&&gu().game.history&&gu().game.history[new Date().toDateString()])||0)*.5)+"m";
+  document.getElementById("mas-pred").textContent=Math.ceil(all.filter(function(w){return (prog[w.id]&&prog[w.id].mastery||0)<70;}).length/Math.max(cfg.dailyNew,1));
+  updateNav();
+}
+
+// PROFILE
+function renderProfile(){
+  var u=gu();if(!u)return;var g=u.game||{},prog=u.progress||{};
+  document.getElementById("pav").textContent=u.avatar;document.getElementById("pnm").textContent=u.name;
+  document.getElementById("psi").textContent="عضو از "+u.joinDate+" · "+Object.values(prog).filter(function(x){return x.reviews>0;}).length+" کارت";
+  var pb=document.getElementById("pbdgs");
+  if(pb){pb.innerHTML="";BADGES.forEach(function(b){var ok=b.ok(g,prog);var d=document.createElement("div");d.className="bdgi"+(ok?" ok":"");d.innerHTML="<span class='bdgic' style='filter:"+(ok?"none":"grayscale(1) opacity(.3)")+"'>"+b.ico+"</span><span class='bdgl'>"+b.lbl+"</span>";pb.appendChild(d);});}
+  var hl=document.getElementById("his-list");
+  if(hl){var hist=g.history||{};var maxV=Math.max.apply(null,Object.values(hist).concat([1]));hl.innerHTML="";for(var i=0;i<7;i++){var d=new Date(Date.now()-i*86400000);var val=hist[d.toDateString()]||0;var fa=d.toLocaleDateString("fa-IR",{month:"short",day:"numeric"});var div=document.createElement("div");div.className="hisi";div.innerHTML="<span class='hisd'>"+fa+"</span><div class='hisb'><div class='hisf' style='width:"+Math.round(val/maxV*100)+"%'></div></div><span class='hisn'>"+val+"</span>";hl.appendChild(div);}}
+  var pul=document.getElementById("pul");
+  if(pul){pul.innerHTML="";Object.keys(users).forEach(function(k){var usr=users[k];var rev=Object.values(usr.progress||{}).filter(function(x){return x.reviews>0;}).length;var d=document.createElement("div");d.className="ui";if(k===uid)d.style.borderColor="var(--ac2)";var av=document.createElement("div");av.className="uav";av.textContent=usr.avatar;var nm=document.createElement("div");nm.className="unm";nm.textContent=usr.name+(k===uid?" ✓":"");var inf=document.createElement("div");inf.className="uinf";inf.textContent=rev+" کارت";var del=document.createElement("button");del.className="udel-btn";del.textContent="✕";(function(k2){del.addEventListener("click",function(e){e.stopPropagation();delU(k2);});})(k);d.appendChild(av);d.appendChild(nm);d.appendChild(inf);d.appendChild(del);if(k!==uid){(function(k2){d.addEventListener("click",function(){loginAs(k2);});})(k);}pul.appendChild(d);});}
+}
+
+// WORDS
+function renderWL(){
+  var q=(document.getElementById("wsrch").value||"").toLowerCase();
+  var prog=gp();
+  var words=VOCAB;
+  var allCats=["GR","PRV","AWL","MED","BIZ","TECH","HOM","BOD","FOD","NAT","TRN","HLT","EMO","CLO","EDU","VRB","ADJ","ADV","SPT","SCI","ART","ENV","WRK","TRV","DIG","WEA","FPR","LAW","PSY","COL","PV","IDM","PHR"];
+  if(wf==="idiom")words=words.filter(function(w){return w.pos==="idiom";});
+  else if(allCats.indexOf(wf)>=0)words=words.filter(function(w){return w.level===wf;});
+  else if(wf!=="all")words=words.filter(function(w){return w.level===wf;});
+  if(q)words=words.filter(function(w){return w.word.toLowerCase().indexOf(q)>=0||w.fa.indexOf(q)>=0;});
+  var wltot=document.getElementById("wltot");
+  if(wltot)wltot.textContent=words.length;
+  var list=document.getElementById("wl");
+  if(!list)return;
+
+  // PAGINATION: 20 per page
+  var PAGE_SIZE=20;
+  var curPage=0;
+  var totalPages=Math.max(1,Math.ceil(words.length/PAGE_SIZE));
+
+  function buildPager(){
+    var old=document.getElementById("wl-pager");
+    if(old)old.remove();
+    if(totalPages<=1)return;
+    var pager=document.createElement("div");
+    pager.id="wl-pager";
+    pager.style.cssText="display:flex;align-items:center;justify-content:space-between;padding:8px 0;gap:8px;direction:rtl;margin-top:8px";
+    var prev=document.createElement("button");
+    prev.style.cssText="flex:1;padding:10px;border-radius:var(--rs);border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);font-size:13px;cursor:pointer;font-family:inherit";
+    prev.textContent="◀ قبلی";
+    prev.disabled=curPage===0;
+    prev.style.opacity=curPage===0?"0.3":"1";
+    prev.addEventListener("click",function(){if(curPage>0){renderPage(curPage-1);document.getElementById("words").scrollTop=0;}});
+    var info=document.createElement("div");
+    info.style.cssText="text-align:center;font-size:12px;color:var(--t3);min-width:80px;direction:rtl";
+    info.textContent="صفحه "+(curPage+1)+" از "+totalPages;
+    var next=document.createElement("button");
+    next.style.cssText="flex:1;padding:10px;border-radius:var(--rs);border:1px solid var(--bd2);background:var(--bg3);color:var(--t2);font-size:13px;cursor:pointer;font-family:inherit";
+    next.textContent="بعدی ▶";
+    next.disabled=curPage>=totalPages-1;
+    next.style.opacity=curPage>=totalPages-1?"0.3":"1";
+    next.addEventListener("click",function(){if(curPage<totalPages-1){renderPage(curPage+1);document.getElementById("words").scrollTop=0;}});
+    pager.appendChild(next);pager.appendChild(info);pager.appendChild(prev);
+    list.appendChild(pager);
+  }
+
+  function renderPage(pg){
+    curPage=pg;
+    list.innerHTML="";
+    var batch=words.slice(pg*PAGE_SIZE,(pg+1)*PAGE_SIZE);
+    batch.forEach(function(w){
+      var p=prog[w.id],m=(p&&p.mastery)||0;
+      var col=m>=70?"var(--gr)":(p&&p.reviews>0?"var(--or)":"var(--ac2)");
+      var lcol=LC[w.level]||"var(--t3)";
+      var spc=["idiom","collocation","phrasal verb","proverb","grammar","phrase"].indexOf(w.pos)>=0;
+      var d=document.createElement("div");d.className="wi";
+      d.innerHTML="<div class='wdot' style='background:"+col+";color:"+col+"'></div>"+
+        "<div style='flex:1'><div class='ww'>"+w.word+(spc?"<span class='stag'>"+w.pos+"</span>":"")+
+        "</div><div class='wf2'>"+w.fa+"</div></div>"+
+        "<div style='display:flex;align-items:center;gap:5px'>"+
+        "<div class='wbd' style='color:"+lcol+";border-color:"+lcol+"'>"+w.level+"</div>"+
+        "<div class='wm'>"+m+"%</div></div>";
+      (function(ww){d.addEventListener("click",function(){cur=ww;speakW(ww.word);toast("🔊 "+ww.word+" — "+ww.fa);});})(w);
+      list.appendChild(d);
+    });
+    buildPager();
+  }
+  renderPage(0);
+}
+
+function resetUser(){if(!gu())return;if(!confirm("پیشرفت "+gu().name+" پاک بشه?"))return;gu().progress={};gu().game={streak:0,lastStudy:"",totalXP:0,history:{}};save();updateNav();toast("پاک شد ✓");}
+
+// SWIPE
+var tx=0,sw2=false;
+document.getElementById("card").addEventListener("touchstart",function(e){tx=e.touches[0].clientX;sw2=false;},{passive:true});
+document.getElementById("card").addEventListener("touchmove",function(e){if(!flipped)return;var dx=e.touches[0].clientX-tx;if(Math.abs(dx)>10){sw2=true;var c=document.getElementById("card");c.style.transition="none";c.style.transform="rotateY(180deg) translateX("+(-(dx*.3))+"px) rotate("+(dx*.02)+"deg)";}},{passive:true});
+document.getElementById("card").addEventListener("touchend",function(e){var c=document.getElementById("card");c.style.transition="";if(!flipped||!sw2){c.style.transform=flipped?"rotateY(180deg)":"";return;}var dx=e.changedTouches[0].clientX-tx;if(dx>80){c.style.transform="rotateY(180deg) translateX(120px)";setTimeout(function(){rate(3);},150);}else if(dx<-80){c.style.transform="rotateY(180deg) translateX(-120px)";setTimeout(function(){rate(0);},150);}else c.style.transform="rotateY(180deg)";},{passive:true});
+
+window.addEventListener("load",function(){init();});
+window.addEventListener("orientationchange",function(){
+  setTimeout(function(){
+    var active=document.querySelector(".scr.on");
+    if(active)active.style.minHeight=window.innerHeight+"px";
+  },300);
+});
+window.addEventListener("resize",function(){
+  var active=document.querySelector(".scr.on");
+  if(active){
+    active.style.height="";
+  }
+});
+</script>
+</body>
+</html>
