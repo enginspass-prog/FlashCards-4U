@@ -12,7 +12,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;-moz-user-select:none;user-select:none}
 :root{
---bg:#060d18;--bg2:#0b1628;--bg3:#0f1f35;--bg4:#142540;
+--bg:#060d18;--bg1:#08111f;--bg2:#0b1628;--bg3:#0f1f35;--bg4:#142540;
 --t1:#f0f6ff;--t2:#a8c4e0;--t3:#4a6a8a;
 --bd:#162035;--bd2:#1e2f48;--bd3:#2a3f5a;
 --ac:#1a6cf0;--ac2:#4d9fff;
@@ -22,7 +22,7 @@
 --r:18px;--rs:13px;--rx:9px;--sh:0 12px 40px rgba(0,0,0,.5);--tr:.22s ease;
 --ui-scale:1;
 }
-.light{--bg:#f0f4f8;--bg2:#fff;--bg3:#e8eef5;--bg4:#dde5ef;--t1:#0a1628;--t2:#2a4060;--t3:#5a7a9a;--bd:#c8d8e8;--bd2:#b8cde0;--bd3:#a8bdd0}
+.light{--bg:#f0f4f8;--bg1:#f7f9fc;--bg2:#fff;--bg3:#e8eef5;--bg4:#dde5ef;--t1:#0a1628;--t2:#2a4060;--t3:#5a7a9a;--bd:#c8d8e8;--bd2:#b8cde0;--bd3:#a8bdd0}
 html,html{height:100%}
 body{height:100%;background:var(--bg);color:var(--t1);font-family:-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased}
 #app{display:flex;flex-direction:column;height:100%;position:relative}
@@ -544,8 +544,61 @@ input:-webkit-autofill:focus {
           <div class="scat-btn" id="lv_EDU" style="color:var(--EDU)"><div class="lsg"></div><span class="scat-ico">📚</span><div><div class="scat-nm">تحصیل</div><div class="scat-en">Education</div><div class="scat-ct" id="cnt_EDU"></div></div></div>
           <button class="scat-quiz" id="qbtn_EDU" style="color:var(--EDU);border-color:var(--EDU)">آزمون</button>
         </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_SPT" style="color:var(--SPT)"><div class="lsg"></div><span class="scat-ico">⚽</span><div><div class="scat-nm">ورزش</div><div class="scat-en">Sports</div><div class="scat-ct" id="cnt_SPT"></div></div></div>
+          <button class="scat-quiz" id="qbtn_SPT" style="color:var(--SPT);border-color:var(--SPT)">آزمون</button>
         </div>
-          <button class="scat-quiz" id="qbtn_ADV" style="color:var(--ADV);border-color:var(--ADV)">آزمون</button>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_SCI" style="color:var(--SCI)"><div class="lsg"></div><span class="scat-ico">🔬</span><div><div class="scat-nm">علوم</div><div class="scat-en">Science</div><div class="scat-ct" id="cnt_SCI"></div></div></div>
+          <button class="scat-quiz" id="qbtn_SCI" style="color:var(--SCI);border-color:var(--SCI)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_ART" style="color:var(--ART)"><div class="lsg"></div><span class="scat-ico">🎭</span><div><div class="scat-nm">هنر و فرهنگ</div><div class="scat-en">Arts</div><div class="scat-ct" id="cnt_ART"></div></div></div>
+          <button class="scat-quiz" id="qbtn_ART" style="color:var(--ART);border-color:var(--ART)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_ENV" style="color:var(--ENV)"><div class="lsg"></div><span class="scat-ico">🌿</span><div><div class="scat-nm">محیط زیست</div><div class="scat-en">Environment</div><div class="scat-ct" id="cnt_ENV"></div></div></div>
+          <button class="scat-quiz" id="qbtn_ENV" style="color:var(--ENV);border-color:var(--ENV)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_WRK" style="color:var(--WRK)"><div class="lsg"></div><span class="scat-ico">💼</span><div><div class="scat-nm">کار و شغل</div><div class="scat-en">Work</div><div class="scat-ct" id="cnt_WRK"></div></div></div>
+          <button class="scat-quiz" id="qbtn_WRK" style="color:var(--WRK);border-color:var(--WRK)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_TRV" style="color:var(--TRV)"><div class="lsg"></div><span class="scat-ico">✈️</span><div><div class="scat-nm">سفر</div><div class="scat-en">Travel</div><div class="scat-ct" id="cnt_TRV"></div></div></div>
+          <button class="scat-quiz" id="qbtn_TRV" style="color:var(--TRV);border-color:var(--TRV)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_DIG" style="color:var(--DIG)"><div class="lsg"></div><span class="scat-ico">📱</span><div><div class="scat-nm">دیجیتال</div><div class="scat-en">Digital</div><div class="scat-ct" id="cnt_DIG"></div></div></div>
+          <button class="scat-quiz" id="qbtn_DIG" style="color:var(--DIG);border-color:var(--DIG)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_WEA" style="color:var(--WEA)"><div class="lsg"></div><span class="scat-ico">☀️</span><div><div class="scat-nm">آب‌وهوا</div><div class="scat-en">Weather</div><div class="scat-ct" id="cnt_WEA"></div></div></div>
+          <button class="scat-quiz" id="qbtn_WEA" style="color:var(--WEA);border-color:var(--WEA)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_FPR" style="color:var(--FPR)"><div class="lsg"></div><span class="scat-ico">🍳</span><div><div class="scat-nm">آشپزی</div><div class="scat-en">Cooking</div><div class="scat-ct" id="cnt_FPR"></div></div></div>
+          <button class="scat-quiz" id="qbtn_FPR" style="color:var(--FPR);border-color:var(--FPR)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_LAW" style="color:var(--LAW)"><div class="lsg"></div><span class="scat-ico">⚖️</span><div><div class="scat-nm">حقوق</div><div class="scat-en">Law</div><div class="scat-ct" id="cnt_LAW"></div></div></div>
+          <button class="scat-quiz" id="qbtn_LAW" style="color:var(--LAW);border-color:var(--LAW)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_PSY" style="color:var(--PSY)"><div class="lsg"></div><span class="scat-ico">🧠</span><div><div class="scat-nm">روانشناسی</div><div class="scat-en">Psychology</div><div class="scat-ct" id="cnt_PSY"></div></div></div>
+          <button class="scat-quiz" id="qbtn_PSY" style="color:var(--PSY);border-color:var(--PSY)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_COL" style="color:var(--COL)"><div class="lsg"></div><span class="scat-ico">🔗</span><div><div class="scat-nm">کالوکیشن</div><div class="scat-en">Collocations</div><div class="scat-ct" id="cnt_COL"></div></div></div>
+          <button class="scat-quiz" id="qbtn_COL" style="color:var(--COL);border-color:var(--COL)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_PV" style="color:var(--PV)"><div class="lsg"></div><span class="scat-ico">🔀</span><div><div class="scat-nm">افعال ترکیبی</div><div class="scat-en">Phrasal Verbs</div><div class="scat-ct" id="cnt_PV"></div></div></div>
+          <button class="scat-quiz" id="qbtn_PV" style="color:var(--PV);border-color:var(--PV)">آزمون</button>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div class="scat-btn" id="lv_IDM" style="color:var(--IDM)"><div class="lsg"></div><span class="scat-ico">💡</span><div><div class="scat-nm">اصطلاح</div><div class="scat-en">Idioms</div><div class="scat-ct" id="cnt_IDM"></div></div></div>
+          <button class="scat-quiz" id="qbtn_IDM" style="color:var(--IDM);border-color:var(--IDM)">آزمون</button>
         </div>
       </div>
     </div>
@@ -843,10 +896,6 @@ input:-webkit-autofill:focus {
       <div id="wl"></div>
     </div>
 
-  </div><!-- /screens -->
-
-  <!-- BOTTOM NAV -->
-</div>
 <div id="toast"></div>
 <div id="help-tip" class="help-tip" role="status">
   <div class="help-tip-title" id="help-tip-title"></div>
@@ -2840,8 +2889,8 @@ function initMycards(){
         </div>
       </div>
     </div>
-
-
+  </div><!-- /screens -->
+</div>
 
 <div id="bnav">
     <div class="nind" id="nind"></div>
