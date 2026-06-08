@@ -1,4 +1,4 @@
-﻿// FlashCards 4U v62 app logic
+﻿// FlashCards 4U v63 app logic
 // vocab loaded externally
 var LC={A1:"#00d084",A2:"#00c9c9",B1:"#4d9fff",B2:"#b87fff",C1:"#ff8c00",C2:"#ff3b5c",GR:"#9b59b6",PRV:"#e67e22",AWL:"#27ae60",MED:"#e74c3c",BIZ:"#2980b9",TECH:"#8e44ad",HOM:"#e91e8c",BOD:"#00bcd4",FOD:"#8bc34a",NAT:"#4caf50",TRN:"#ff9800",HLT:"#f44336",EMO:"#9c27b0",CLO:"#ff5722",EDU:"#3f51b5",VRB:"#009688",ADJ:"#673ab7",ADV:"#607d8b",SPT:"#ff6b35",SCI:"#5c6bc0",ART:"#ab47bc",ENV:"#26a69a",WRK:"#42a5f5",TRV:"#26c6da",DIG:"#7e57c2",WEA:"#66bb6a",FPR:"#ef5350",LAW:"#8d6e63",PSY:"#ff7043",COL:"#00897b",PV:"#1e88e5",IDM:"#e53935"};
 var LE={A1:"🌱",A2:"🌿",B1:"🌳",B2:"🦅",C1:"🔥",C2:"🏆",GR:"📝",PRV:"💬",AWL:"🎓",MED:"🏥",BIZ:"💼",TECH:"💻",HOM:"🏠",BOD:"🫀",FOD:"🍎",NAT:"🌍",TRN:"🚗",HLT:"💊",EMO:"❤️",CLO:"👕",EDU:"📚",VRB:"⚡",ADJ:"🎨",ADV:"💨",SPT:"⚽",SCI:"🔬",ART:"🎭",ENV:"🌿",WRK:"💼",TRV:"✈️",DIG:"📱",WEA:"☀️",FPR:"🍳",LAW:"⚖️",PSY:"🧠",COL:"🔗",PV:"🔀",IDM:"💡"};
@@ -89,8 +89,10 @@ function applyFontScale(){
   if(s<1)s=1;
   if(s>1.6)s=1.6;
   cfg.fontSize=s;
-  document.documentElement.style.fontSize=(16*s)+"px";
-  document.documentElement.style.setProperty("--ui-scale",s);
+  var ui=Math.min(s,1.18);
+  document.documentElement.style.fontSize=(16*ui)+"px";
+  document.documentElement.style.setProperty("--ui-scale",ui);
+  document.documentElement.style.setProperty("--text-scale",s);
 }
 
 // SAVE
@@ -140,6 +142,7 @@ function gotoTab(id,opts){
   if(id==="lvls")updateLvlCounts();
   if(id==="welcome")updateWelcome();
   if(id==="quiz")showQuizSetup();
+  if(id==="study"&&uid&&(!cur||!sq.length))buildQ();
   if(id==="mycards"){initMycards();}
   if(id==="login"){renderLogin();document.getElementById("bnav").style.display="none";}
   else if(uid){document.getElementById("bnav").style.display="flex";}
@@ -333,7 +336,7 @@ function init(){
   if(sqb)sqb.addEventListener("click",function(){gotoTab("settings");});
   var thb=document.getElementById("thmbtn");if(thb)thb.addEventListener("click",toggleTheme);
   document.getElementById("btn_welcome").addEventListener("click",function(){gotoTab("welcome");});
-  document.getElementById("btn_study").addEventListener("click",function(){gotoTab("study");});
+  document.getElementById("btn_study").addEventListener("click",function(){buildQ();gotoTab("study");});
   document.getElementById("btn_quiz").addEventListener("click",function(){gotoTab("quiz");});
   document.getElementById("btn_stats").addEventListener("click",function(){gotoTab("stats");});
   var bw=document.getElementById("btn_words");
@@ -1419,7 +1422,7 @@ function exportProfile(){
   var url=URL.createObjectURL(blob);
   var a=document.createElement("a");
   a.href=url;
-  a.download="flashcards4u_profile_v62_"+new Date().toISOString().slice(0,10)+".json";
+  a.download="flashcards4u_profile_v63_"+new Date().toISOString().slice(0,10)+".json";
   a.click();
   URL.revokeObjectURL(url);
   toast("بکاپ کامل پروفایل ساخته شد ✅");
