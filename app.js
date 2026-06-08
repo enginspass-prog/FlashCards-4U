@@ -1,4 +1,4 @@
-﻿// FlashCards 4U v61 app logic
+﻿// FlashCards 4U v62 app logic
 // vocab loaded externally
 var LC={A1:"#00d084",A2:"#00c9c9",B1:"#4d9fff",B2:"#b87fff",C1:"#ff8c00",C2:"#ff3b5c",GR:"#9b59b6",PRV:"#e67e22",AWL:"#27ae60",MED:"#e74c3c",BIZ:"#2980b9",TECH:"#8e44ad",HOM:"#e91e8c",BOD:"#00bcd4",FOD:"#8bc34a",NAT:"#4caf50",TRN:"#ff9800",HLT:"#f44336",EMO:"#9c27b0",CLO:"#ff5722",EDU:"#3f51b5",VRB:"#009688",ADJ:"#673ab7",ADV:"#607d8b",SPT:"#ff6b35",SCI:"#5c6bc0",ART:"#ab47bc",ENV:"#26a69a",WRK:"#42a5f5",TRV:"#26c6da",DIG:"#7e57c2",WEA:"#66bb6a",FPR:"#ef5350",LAW:"#8d6e63",PSY:"#ff7043",COL:"#00897b",PV:"#1e88e5",IDM:"#e53935"};
 var LE={A1:"🌱",A2:"🌿",B1:"🌳",B2:"🦅",C1:"🔥",C2:"🏆",GR:"📝",PRV:"💬",AWL:"🎓",MED:"🏥",BIZ:"💼",TECH:"💻",HOM:"🏠",BOD:"🫀",FOD:"🍎",NAT:"🌍",TRN:"🚗",HLT:"💊",EMO:"❤️",CLO:"👕",EDU:"📚",VRB:"⚡",ADJ:"🎨",ADV:"💨",SPT:"⚽",SCI:"🔬",ART:"🎭",ENV:"🌿",WRK:"💼",TRV:"✈️",DIG:"📱",WEA:"☀️",FPR:"🍳",LAW:"⚖️",PSY:"🧠",COL:"🔗",PV:"🔀",IDM:"💡"};
@@ -1419,7 +1419,7 @@ function exportProfile(){
   var url=URL.createObjectURL(blob);
   var a=document.createElement("a");
   a.href=url;
-  a.download="flashcards4u_profile_v61_"+new Date().toISOString().slice(0,10)+".json";
+  a.download="flashcards4u_profile_v62_"+new Date().toISOString().slice(0,10)+".json";
   a.click();
   URL.revokeObjectURL(url);
   toast("بکاپ کامل پروفایل ساخته شد ✅");
