@@ -1,4 +1,4 @@
-﻿// FlashCards 4U v63 app logic
+﻿// FlashCards 4U v64 app logic
 // vocab loaded externally
 var LC={A1:"#00d084",A2:"#00c9c9",B1:"#4d9fff",B2:"#b87fff",C1:"#ff8c00",C2:"#ff3b5c",GR:"#9b59b6",PRV:"#e67e22",AWL:"#27ae60",MED:"#e74c3c",BIZ:"#2980b9",TECH:"#8e44ad",HOM:"#e91e8c",BOD:"#00bcd4",FOD:"#8bc34a",NAT:"#4caf50",TRN:"#ff9800",HLT:"#f44336",EMO:"#9c27b0",CLO:"#ff5722",EDU:"#3f51b5",VRB:"#009688",ADJ:"#673ab7",ADV:"#607d8b",SPT:"#ff6b35",SCI:"#5c6bc0",ART:"#ab47bc",ENV:"#26a69a",WRK:"#42a5f5",TRV:"#26c6da",DIG:"#7e57c2",WEA:"#66bb6a",FPR:"#ef5350",LAW:"#8d6e63",PSY:"#ff7043",COL:"#00897b",PV:"#1e88e5",IDM:"#e53935"};
 var LE={A1:"🌱",A2:"🌿",B1:"🌳",B2:"🦅",C1:"🔥",C2:"🏆",GR:"📝",PRV:"💬",AWL:"🎓",MED:"🏥",BIZ:"💼",TECH:"💻",HOM:"🏠",BOD:"🫀",FOD:"🍎",NAT:"🌍",TRN:"🚗",HLT:"💊",EMO:"❤️",CLO:"👕",EDU:"📚",VRB:"⚡",ADJ:"🎨",ADV:"💨",SPT:"⚽",SCI:"🔬",ART:"🎭",ENV:"🌿",WRK:"💼",TRV:"✈️",DIG:"📱",WEA:"☀️",FPR:"🍳",LAW:"⚖️",PSY:"🧠",COL:"🔗",PV:"🔀",IDM:"💡"};
@@ -47,7 +47,7 @@ var AVS=["🧑","👩","👨","👧","👦","👩‍🎓","👨‍🎓","👩‍
 // STATE
 var users={},uid=null,sq=[],cur=null,flipped=false;
 var wf="all",voices=[],sRev=0,sMas=0,sXP=0;
-var cfg={dailyNew:20,autoSpeak:"front",speakRate:"normal",accent:"us",examMode:false,showSyn:true,order:"due",fontSize:1.08};
+var cfg={dailyNew:20,autoSpeak:"front",speakRate:"normal",accent:"us",voiceName:"",examMode:false,showSyn:true,order:"due",fontSize:1.08};
 var isLight=false;
 var selAv="🧑";
 var navStack=[], appHistoryReady=false, appBackExiting=false;
@@ -82,6 +82,42 @@ function setupIconHelp(){
     var el=e.target.closest&&e.target.closest("[data-help-title]");
     if(!el)return;
     showHelpTip(el.getAttribute("data-help-title"),el.getAttribute("data-help-body"));
+  });
+}
+function showOnboard(){
+  var ob=document.getElementById("onboard");
+  if(!ob)return;
+  ob.classList.add("show");
+  ob.setAttribute("aria-hidden","false");
+}
+function hideOnboard(markDone){
+  var ob=document.getElementById("onboard");
+  if(ob){ob.classList.remove("show");ob.setAttribute("aria-hidden","true");}
+  if(markDone&&gu()){gu().onboardSeen=true;save();}
+}
+function maybeShowOnboard(){
+  var u=gu();
+  if(!u||u.onboardSeen)return;
+  setTimeout(showOnboard,650);
+}
+function setupOnboard(){
+  var later=document.getElementById("onboard-later");
+  var start=document.getElementById("onboard-start");
+  var settings=document.getElementById("onboard-settings");
+  if(later)later.addEventListener("click",function(){hideOnboard(true);});
+  if(start)start.addEventListener("click",function(){hideOnboard(true);buildQ();gotoTab("study");});
+  if(settings)settings.addEventListener("click",function(){hideOnboard(true);gotoTab("settings");});
+  var ob=document.getElementById("onboard");
+  if(ob)ob.addEventListener("click",function(e){if(e.target===ob)hideOnboard(true);});
+}
+function setupVoiceStudio(){
+  var btn=document.getElementById("voice-test-btn");
+  if(btn)btn.addEventListener("click",function(){speakW("FlashCards 4U makes vocabulary practice clear and memorable.");});
+  var sel=document.getElementById("voice-select");
+  if(sel)sel.addEventListener("change",function(){
+    cfg.voiceName=sel.value||"";
+    save();
+    speakW("This is the selected voice.");
   });
 }
 function applyFontScale(){
@@ -315,6 +351,8 @@ function init(){
   applyThemeBtn();
   buildAvatars();buildFilters();buildFSBtns();buildSegs();buildLvlBtns();
   setupTTS();
+  setupVoiceStudio();
+  setupOnboard();
 
   // All event listeners
   document.getElementById("login-btn").addEventListener("click",createUser);
@@ -441,7 +479,7 @@ function createUser(){
   });
   if(existingKey){loginAs(existingKey);return;}
   var k="u"+Date.now();
-  users[k]={name:name,avatar:selAv,level:"A1",progress:{},game:{streak:0,lastStudy:"",totalXP:0,history:{}},joinDate:new Date().toLocaleDateString("fa-IR")};
+  users[k]={name:name,avatar:selAv,level:"A1",progress:{},game:{streak:0,lastStudy:"",totalXP:0,history:{}},joinDate:new Date().toLocaleDateString("fa-IR"),onboardSeen:false};
   loginAs(k);
 }
 
@@ -462,6 +500,7 @@ function afterLogin(){
     toast("سطح خود را انتخاب کنید 👇");
   } else {
     gotoTab("welcome",{skipStack:true,replace:true});document.getElementById("bnav").style.display="flex";
+    maybeShowOnboard();
   }
   document.querySelectorAll("#bnav .bnt").forEach(function(b){b.classList.remove("on");});
   var wb=document.getElementById("btn_welcome");if(wb)wb.classList.add("on");
@@ -694,8 +733,37 @@ function animNext(){
 }
 
 // TTS
-function setupTTS(){if(!window.speechSynthesis)return;var l=function(){voices=speechSynthesis.getVoices();};l();speechSynthesis.onvoiceschanged=l;}
-function getV(){if(cfg.accent==="uk")return voices.filter(function(v){return v.lang==="en-GB";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;return voices.filter(function(v){return v.lang==="en-US";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0&&v.name.toLowerCase().indexOf("us")>=0;})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;}
+function voiceLabel(v){return v.name;}
+function renderVoiceOptions(){
+  var sel=document.getElementById("voice-select");
+  if(!sel)return;
+  var english=voices.filter(function(v){return v.lang&&v.lang.indexOf("en")===0;});
+  var current=cfg.voiceName||"";
+  sel.innerHTML="<option value=''>انتخاب خودکار</option>";
+  english.forEach(function(v){
+    var o=document.createElement("option");
+    o.value=v.name;
+    o.textContent=voiceLabel(v);
+    sel.appendChild(o);
+  });
+  if(current&&english.some(function(v){return v.name===current;}))sel.value=current;
+  else {cfg.voiceName="";sel.value="";}
+}
+function setupTTS(){
+  if(!window.speechSynthesis)return;
+  var l=function(){voices=speechSynthesis.getVoices();renderVoiceOptions();};
+  l();
+  speechSynthesis.onvoiceschanged=l;
+  setTimeout(l,500);
+}
+function getV(){
+  if(cfg.voiceName){
+    var chosen=voices.filter(function(v){return v.name===cfg.voiceName;})[0];
+    if(chosen)return chosen;
+  }
+  if(cfg.accent==="uk")return voices.filter(function(v){return v.lang==="en-GB";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;
+  return voices.filter(function(v){return v.lang==="en-US";})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0&&v.name.toLowerCase().indexOf("us")>=0;})[0]||voices.filter(function(v){return v.lang.indexOf("en")===0;})[0]||null;
+}
 function getR(){return{slow:.7,normal:.85,fast:1.1}[cfg.speakRate]||.85;}
 function speak(){if(cur)speakW(cur.word);}
 function speakW(word){
@@ -885,10 +953,44 @@ function startQuiz(){
   }
 }
 
+function normTxt(s){return String(s||"").toLowerCase().replace(/[^\w\u0600-\u06ff]+/g," ").trim();}
+function choiceScore(w,x,field){
+  var score=0;
+  if(x.level===w.level)score+=12;
+  if(x.pos&&w.pos&&x.pos===w.pos)score+=10;
+  if(x.tag&&w.tag&&x.tag===w.tag)score+=5;
+  if(field==="fa"){
+    var a=normTxt(w.fa),b=normTxt(x.fa);
+    score+=Math.max(0,7-Math.abs(a.length-b.length));
+    if(a&&b&&a.split(" ").some(function(p){return p.length>2&&b.indexOf(p)>=0;}))score+=4;
+  }else if(field==="word"){
+    score+=Math.max(0,6-Math.abs(String(w.word||"").length-String(x.word||"").length));
+    if(String(w.word||"")[0]&&String(w.word||"")[0].toLowerCase()===String(x.word||"")[0].toLowerCase())score+=3;
+  }else{
+    if(x.level===w.level)score+=4;
+    if(x.pos&&w.pos&&x.pos===w.pos)score+=4;
+  }
+  return score+Math.random();
+}
+function uniqueChoicePool(pool,field,w){
+  var seen={};
+  return pool.filter(function(x){
+    if(!x||x.id===w.id||!x[field])return false;
+    var key=normTxt(x[field]);
+    if(!key||key===normTxt(w[field])||seen[key])return false;
+    seen[key]=1;
+    return true;
+  });
+}
+function hardChoices(w,field){
+  var pool=uniqueChoicePool(VOCAB,field,w);
+  var primary=pool.filter(function(x){return x.level===w.level&&(!w.pos||!x.pos||x.pos===w.pos);});
+  if(primary.length<3)primary=pool.filter(function(x){return x.level===w.level||(!w.pos||!x.pos||x.pos===w.pos);});
+  if(primary.length<3)primary=pool;
+  return primary.sort(function(a,b){return choiceScore(w,b,field)-choiceScore(w,a,field);}).slice(0,3);
+}
 function getPool4Choices(w){
-  var same = VOCAB.filter(function(x){return x.id!==w.id && x.level===w.level && x.fa!==w.fa;});
-  if(same.length < 3) same = VOCAB.filter(function(x){return x.id!==w.id && x.fa!==w.fa;});
-  return same.sort(function(){return Math.random()-.5;}).slice(0,3);
+  return hardChoices(w,"fa");
 }
 
 function showQ(){
@@ -967,8 +1069,7 @@ function showQ(){
 }
 
 function getFieldChoices(w, field){
-  var pool=VOCAB.filter(function(x){return x.id!==w.id&&x[field]&&String(x[field]).trim()&&x[field]!==w[field];});
-  return pool.sort(function(){return Math.random()-.5;}).slice(0,3);
+  return hardChoices(w,field);
 }
 
 function buildChoices(w, wrongs, field){
@@ -1409,7 +1510,7 @@ function resetUser(){if(!gu())return;if(!confirm("پیشرفت "+gu().name+" پ�
 function exportProfile(){
   var backup={
     app:"FlashCards 4U",
-    version:61,
+    version:64,
     exportedAt:new Date().toISOString(),
     uid:uid,
     users:users,
@@ -1422,7 +1523,7 @@ function exportProfile(){
   var url=URL.createObjectURL(blob);
   var a=document.createElement("a");
   a.href=url;
-  a.download="flashcards4u_profile_v63_"+new Date().toISOString().slice(0,10)+".json";
+  a.download="flashcards4u_profile_v64_"+new Date().toISOString().slice(0,10)+".json";
   a.click();
   URL.revokeObjectURL(url);
   toast("بکاپ کامل پروفایل ساخته شد ✅");

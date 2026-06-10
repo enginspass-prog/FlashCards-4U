@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#060d18">
 <meta name="screen-orientation" content="any">
-<title>FlashCards 4U v63</title>
+<title>FlashCards 4U v64</title>
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
@@ -31,7 +31,7 @@
     <div id="login" class="scr on">
       <div class="lbox">
         <div class="l-logo"><img class="app-logo-img" src="app-logo.jpg" alt="FlashCards 4U"></div>
-        <div class="l-ttl">FlashCards 4U <span style="font-size:11px;color:var(--gd)">v63</span></div>
+        <div class="l-ttl">FlashCards 4U <span style="font-size:11px;color:var(--gd)">v64</span></div>
         <div class="l-sub">یادگیری هوشمند کارت‌ها انگلیسی — علیرضا بیات</div>
         <div id="ulsec" style="display:none">
           <div id="ul" class="ul"></div>
@@ -526,6 +526,13 @@
       </div>
       <div class="cfgs">
         <div class="cfgsh">🔊 صدا</div>
+        <div class="voice-studio">
+          <div>
+            <div class="voice-title">Voice Studio</div>
+            <div class="voice-copy">گوینده و سرعت را انتخاب کن و قبل از مطالعه صدای نمونه را بشنو.</div>
+          </div>
+          <button id="voice-test-btn" class="voice-test" type="button">🔊 تست صدا</button>
+        </div>
         <div class="cfgr">
           <div class="cfgl"><div class="cfgt">تلفظ خودکار</div><div class="cfgd">زمان نمایش کارت</div></div>
           <div class="seg" id="seg-speak">
@@ -533,6 +540,12 @@
             <button class="sgo on" data-v="front">جلو</button>
             <button class="sgo" data-v="both">هر دو</button>
           </div>
+        </div>
+        <div class="cfgr">
+          <div class="cfgl"><div class="cfgt">گوینده</div><div class="cfgd">فقط نام صداهای انگلیسی نصب‌شده روی گوشی یا مرورگر</div></div>
+          <select id="voice-select" class="voice-select">
+            <option value="">انتخاب خودکار</option>
+          </select>
         </div>
         <div class="cfgr">
           <div class="cfgl"><div class="cfgt">سرعت تلفظ</div></div>
@@ -578,6 +591,28 @@
 <div id="help-tip" class="help-tip" role="status">
   <div class="help-tip-title" id="help-tip-title"></div>
   <div class="help-tip-body" id="help-tip-body"></div>
+</div>
+<div id="onboard" class="onboard" aria-hidden="true">
+  <div class="onboard-panel">
+    <div class="onboard-top">
+      <img src="app-logo.jpg" alt="FlashCards 4U">
+      <div>
+        <div class="onboard-kicker">شروع سریع</div>
+        <div class="onboard-title">به FlashCards 4U خوش آمدی</div>
+      </div>
+    </div>
+    <div class="onboard-steps">
+      <div class="onboard-step"><b>1</b><span>از بالا سطح، XP و زنجیره مطالعه را ببین؛ روی آیکون‌های آماری بزنی معنی‌شان توضیح داده می‌شود.</span></div>
+      <div class="onboard-step"><b>2</b><span>از خانه وارد مطالعه شو و بعد از دیدن معنی، میزان یادآوری خودت را انتخاب کن.</span></div>
+      <div class="onboard-step"><b>3</b><span>در آزمون‌ها گزینه‌ها عمداً نزدیک‌ترند؛ پس معنی، نوع کلمه و جمله را دقیق‌تر بخوان.</span></div>
+      <div class="onboard-step"><b>4</b><span>در تنظیمات می‌توانی اندازه فونت، گوینده، سرعت و لهجه را تغییر بدهی.</span></div>
+    </div>
+    <div class="onboard-actions">
+      <button id="onboard-start" class="onboard-primary" type="button">شروع مطالعه</button>
+      <button id="onboard-settings" class="onboard-secondary" type="button">تنظیم صدا و فونت</button>
+      <button id="onboard-later" class="onboard-ghost" type="button">بعداً</button>
+    </div>
+  </div>
 </div>
 
 <script src="vocab.js"></script>
